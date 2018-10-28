@@ -1,0 +1,797 @@
+/*
+Theme Name: Fortunato Child
+Theme URI: http://evicdesign.com
+Author: David John Coleman II
+Author URI: http://davidjohncoleman.com
+Template: fortunato
+Description: Fortunato child theme.  Parent theme demo here http://crestaproject.com/demo/fortunato/
+Version: 3.2
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: fortunato-child
+Tags: child-theme, custom, evicdesign.com
+*/
+
+/*--------------------------------------------------------------
+>>> Child theme could not modify a few styles that were therefore
+modified in the Theme Fortunato style.css. The changes were to:
+(1) commented out the `@media all and (max-width: 1025px)`
+(2) changed `@media all and (max-width: 767px)` to 827px
+(3) fortunato-dynampic.php (changed all references of max-width: 768 to 827)
+--------------------------------------------------------------*/
+
+/* --------------------------------------------------------------
+ * 
+ * IMAGE ALIGNMENT ADJUSTMENT FOR INSIDE OF TEXT CSS (Image Wrap)
+ * 
+ * --------------------------------------------------------------
+ */
+
+ img.alignright { float: right; margin: 0 0 1em 1em; }
+ img.alignleft { float: left; margin: 0 1em 1em 0; }
+ img.aligncenter { display: block; margin-left: auto; margin-right: auto; }
+ .alignright { float: right; }
+ .alignleft { float: left; }
+ .aligncenter { display: block; margin-left: auto; margin-right: auto; }
+ 
+ .wp-image-1296 {
+	 border-radius: 4px;
+		 box-shadow: 0px 0px 10px 0px #989898;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* Margins Padding
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ #print-message {
+	 display: none;
+	 text-align: center;
+	 font-size: 20px;
+ }
+ 
+ #get-data-intro {
+	 margin: 1em 6em 0 6em !important;
+ }
+ 
+ #thrift-shop table, #thrift-shop td, #thrift-shop th {
+	 border: 1px solid black;
+ }
+ 
+ #thrift-shop {
+	 margin-right: 25px;
+ }
+ 
+ .post-1292 .entry-content {
+	 margin: 2% .5em 0;
+ }
+ 
+ .search .content-area {
+	 margin: 45px 0 0;
+ }
+ 
+ .site-content {
+	 min-height: 600px;
+ }
+ 
+ .single .site-content, .blog .site-content {
+	 padding: 0 5%;
+	 max-width: none;
+	 margin: 0 auto;
+ }
+ 
+ .page .site-content {
+	 padding-left: 0;
+	 padding-right: 0;
+	 max-width: none;
+	 margin: 0 auto;
+ }
+ 
+ #custom-footer-copyright {
+	 margin: 0 0 0 0;
+	 padding-bottom: 10px;
+ }
+ 
+ #sow-editor-2 {
+	 margin: 0;
+ }
+ 
+ #sow-social-media-buttons-2 {
+	 margin: 0;
+ }
+ 
+ .page-content, .entry-content, .entry-summary {
+	 margin: 3% 6em 0;
+ }
+ 
+ #text_search {
+		 margin-top: 10px;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* HEADER & MAIN NAVIGATION
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ #search-form label {
+	 display: block;
+ }
+ 
+ .closeSearch {
+	 font-size: 50px;
+ }
+ 
+ .theNavigationBar {
+	 height: 68px;
+	 line-height: 2 !important;
+	 top: 0px;
+	 background: #e7e7e7;
+	 box-shadow: inset 0px 0px 6px #000;
+	 padding: 0 8%;
+ }
+ .main-navigation {
+	 font-size: 20px;
+ }
+ 
+ .main-navigation ul li {
+	 max-width: 227px;
+ }
+ 
+ .main-navigation ul li:hover > a, 
+ .main-navigation ul li.focus > a, 
+ .main-navigation li.current-menu-item > a, 
+ .main-navigation li.current-menu-parent > a, 
+ .main-navigation li.current-page-ancestor > a,
+ .main-navigation .current_page_item > a,
+ .main-navigation .current_page_parent > a {
+	 border-top: 4px solid !important;
+	 height: 68px;
+ }
+ 
+ .main-navigation ul li a {
+	 text-align: center;
+ }
+ 
+ .main-navigation a:hover {
+	 color: #f23434;
+ }
+ 
+ .main-navigation a {
+	 padding: .5em;
+	 margin-right: -6px;
+	 border-top: 4px solid transparent;
+	 border-bottom: 4px solid transparent;
+ }
+ 
+ .main-navigation ul li:hover > a, 
+ .main-navigation ul li.focus > a, 
+ .main-navigation li.current-menu-item > a, 
+ .main-navigation li.current-menu-parent > a, 
+ .main-navigation li.current-page-ancestor > a,
+ .main-navigation .current_page_item > a, 
+ .main-navigation .current_page_parent > a {
+	 border-bottom: 4px solid #3aaed4;
+ }
+ 
+ .menu-image-title {
+	 font-weight: bold;
+ }
+ 
+ .a2a_kit {
+	 box-shadow: 2px 2px 4px #000;
+ }
+ 
+ header.entry-header {
+	 margin-top: 0;
+ }
+ 
+ .header-image {
+	 float: left;
+	 max-height: 48px;
+	 height: auto;
+	 width: 20%;
+	 margin: 17px 0;
+ }
+ 
+ .crh-site-header-search a {
+	 color: #06B3DC;
+ }
+ 
+ .crh-site-header a,
+ .read-link a,
+ .site-title a:hover,
+ .site-title a:focus {
+		 color: #06B3DC;
+ }
+ 
+ .breadcrumbs a:hover,
+ .breadcrumbs a:focus,
+ .breadcrumbs a:active {
+	 color: #f23434;
+ }
+ 
+ .crh-site-header {
+	 position: relative;
+ }
+ 
+ .site-brand-main {
+	 height: auto !important;
+	 position: relative;
+ }
+ 
+ .site-branding {
+	 padding: 5% 2% 0% 2%;
+		 width: 100%;
+		 background: #2d2d2d;
+		 box-shadow: 1px 1px 3px #020202;
+		 border-bottom: 1px solid #e2e2e2;
+ }
+ 
+ .site-branding .site-description {
+	 letter-spacing: .5px;
+		 display: flex;
+		 flex-flow: row;
+		 text-align: right;
+		 text-shadow: 2px 2px 3px #000;
+	 padding: 2% 0 0 0;
+	 font-size: 1em;
+	 color: #fff;
+ }
+ 
+ .site-branding .site-description .site-description-text {
+	 padding: 0 0 0 5%;
+	 width: 60%;
+ }
+ 
+ .site-branding .site-description .breadcrumbs {
+	 font-size: 14px;
+	 width: 40%;
+	 float: left;
+	 text-align: left;
+	 padding: 0 2% 0 0;
+ }
+ 
+ .search-container {
+	 top: 20%;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* ENTRY TITLE
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ .post-157 .entry-content {
+	 margin: 0;
+ }
+ 
+ .page .entry-title {
+	 display: none;
+	 padding: 0% 3% 0% 0%;
+	 text-align: right;
+	 margin-bottom: 0;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* BUTTONS GLINK HOVER
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ 
+ #how-it-works a {
+	 font-size: 24px !important;
+		 padding: 14px !important;
+		 border-radius: 50px !important;
+ }
+ 
+ .glink a:hover {
+	 opacity: 0.9 !important;
+	 box-shadow: 0px 0px 20px 0px #c3c3c3 !important;
+ }
+ 
+ .glink-home-icon {
+	 border-radius: 100px !important;
+ }
+ 
+ .glink-home-icon:hover {
+	 border-radius: 100px !important;
+		 box-shadow: 0 0 25px 0 #484848 !important;
+		 background-color: #00bbe1 !important;
+ }
+ 
+ .glink-footer-icon {
+	 border-radius: 100px !important;
+ }
+ 
+ .glink-footer-icon:hover {
+	 border-radius: 100px !important;
+		 box-shadow: 0 0 25px 0 #ffffff !important;
+		 background-color: #00bbe1 !important;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* BODY
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ .entry-content h1,
+ .entry-content h2,
+ .entry-content h3,
+ .entry-content h4,
+ .entry-content h5,
+ .entry-content h6 {
+		 font-family: Muli,sans-serif;
+		 text-rendering: optimizeLegibility;
+ }
+ 
+ .entry-content p {
+	 font-family: "Open Sans",sans-serif;
+ }
+ 
+ blockquote {
+	 margin: 0 2em 1.5em;
+ }
+ 
+ 
+ a#toTop {
+	 color: #949494;
+ }
+ 
+ html {
+	 overflow-x: hidden;
+ }
+ 
+ body,
+ button,
+ input,
+ select,
+ textarea {
+	 line-height: 1.7;
+	 font-size: 18px;
+ }
+ 
+ input[type="submit"] {
+	 border: 3px solid #336c8d;
+	 font-size: 24px;
+ }
+ 
+ aside ul li {
+	 padding: .3em 0;
+ }
+ 
+ .cl-ib-content {
+	 z-index: 0 !important;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* BEGIN FOOTER
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ .site-footer {
+	 background-color: rgb(15, 15, 15);
+	 border-top: 3px solid #737373;
+	 color: #fff;
+	 max-width: none;
+	 margin: 0 auto;
+ }
+ 
+ .site-footer a:hover {
+	 color: #c0c0c0;
+	 text-decoration: none;
+ }
+ 
+ #footer-widget-area .secondary {
+	 height: auto;
+ }
+ 
+ #footer-widget1 {
+	 width: 100%;
+	 margin-left: 2px;
+	 margin-right: 2px;
+	 margin-top: 15px;
+	 margin-bottom: 0px;
+ }
+ 
+ #footer-widget1 .widget {
+	 margin: 0 0 0 0;
+ }
+ 
+ #footer-widget1 .widget p {
+	 margin: 0 0 0 0;
+ }
+ 
+ #sow-editor-14 .spaceLeftRight {
+	 margin: 0 10px;
+	 font-size: 30px;
+ }
+ 
+ #footer-widget2 {
+	 width: 100%;
+ }
+ 
+ #footer-widget2 .widget {
+	 margin: 0 0 0 0;
+ }
+ 
+ #footer-widget3 {
+	 width: 100%;
+ }
+ 
+ #footer-widget3 .widget {
+	 margin: 0 0 0 0;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* CUSTOM CSS
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ #pl-157 {
+		 color: #474747;
+		 font-size: 14px;
+		 line-height: 1.5;
+		 font-family: 'Roboto Condensed', sans-serif;
+		 text-rendering: optimizeLegibility;
+		 font-weight: 400;
+ }
+ 
+ #cbe4964000df60ef363ec34113851e {
+		 color: #474747;
+		 font-size: 5px;
+		 line-height: 1;
+		 font-family: 'Roboto Condensed', sans-serif;
+		 text-rendering: optimizeLegibility;
+		 font-weight: 400;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* CUSTOM SIDEBARS & OPEN SIDEBAR CHANGE ELEMENTS
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ aside ul.menu li a {
+	 border-bottom-width: 1px;
+	 border-bottom-style: solid;
+	 border-bottom-color: rgba(0,0,0,.1);
+	 padding: 1em 0;
+	 display: inline-block;
+	 height: 43px;
+ }
+ 
+ aside ul.menu .indicatorBar:before {
+		 font-family: "FontAwesome";
+ }
+ 
+ .openSidebar, .openSidebar #hamburger {
+		 width: 36px;
+		 height: 36px;
+ }
+ 
+ .openSidebar #hamburger span {
+	 width: 29px;
+		 top: 6px;
+		 left: 3px;
+ }
+ 
+ .openSidebar #cross span:nth-child(1) {
+		 left: 16px;
+ }
+ 
+ .openSidebar #cross span:nth-child(2) {
+		 top: 16px;
+ }
+ 
+ .openSidebar {
+	 background: #e7e7e7;
+ }
+ 
+ .openSidebar, .openSearch {
+	 top: 20px;
+ }
+ 
+ .openSearch {
+		 border-radius: 36px;
+		 background: #e7e7e7;
+ }
+ 
+ .openSearch:hover, .openSidebar:hover {
+	 box-shadow: 0px 0px 13px 0px #292929;
+ }
+ 
+ .openSearch.yesOpen, body.sidebar-open-default .openSearch {
+		 right: 30px;
+ }
+ 
+ .widget-area.yesOpen {
+	 font-size: 16px;
+	 box-shadow: 0px 2px 4px #000;
+ }
+ 
+ .sepHentry2 {
+	 margin: 2.5em 0em;
+ }
+ 
+ .sepHentry {
+	 margin: 0 0;
+ }
+ 
+ .page-header {
+	 margin: 0 0 !important;
+ }
+ 
+ input[type="search"] {
+		 padding-right: 75px;
+ }
+ 
+ .widget_archive li, .widget_categories li {
+	 text-align: left !important;
+ }
+ 
+ .widget.widget_categories li:before {
+		 font-family: "FontAwesome";
+ }
+ 
+ .rsswidget, .rssSummary, .rss-date {
+	 font-size: 13px;
+	 font-weight: 400;
+ }
+ 
+ /* --------------------------------------------------------------
+	* 
+	* MEDIA QUERIES ALL CONTENT
+	* 
+	* --------------------------------------------------------------
+	*/
+ 
+ @media screen and (max-width: 1040px) {
+ 
+	 .page .entry-title {
+		 font-size: 20px;
+		 padding: 0% 3% 10% 30%;
+	 }
+ 
+	 #footer-widget-area, #footer-widget1, #footer-widget2, #footer-widget3 {
+		 width: 100%;
+		 clear: both;
+	 }
+	 .page-content, .entry-content, .entry-summary {
+		 margin: 5px;
+	 }
+	 .header-image {
+		 display: none;
+	 }
+ }
+ 
+ @media screen and (max-width: 1025px) {
+	 /* overwrite style.css begin */
+ 
+	 .openSidebar {
+		 display: unset;
+		 position: fixed;
+		 z-index: 99;
+	 }
+ 
+	 .widget-area {
+		 z-index: 9;
+		 position: fixed;
+		 top: 0;
+		 left: -330px;
+		 width: 330px;
+		 height: 100%;
+		 background: #ffffff;
+		 padding: 1.5em;
+	 }
+	 #secondary {
+		 margin-top: unset;
+		 -webkit-column-count: unset;
+		 -webkit-column-gap: unset;
+		 -moz-column-count: unset;
+		 -moz-column-gap: unset;
+		 column-count: unset;
+		 column-gap: unset;
+	 }
+	 #secondary aside {
+		 -webkit-column-break-inside: unset;
+		 -moz-column-break-inside: unset;
+		 column-break-inside: unset;
+		 padding: unset;
+	 }
+	 .site-info, .site-social-footer {
+		 width: unset;
+		 text-align: unset;
+	 }
+	 .site-info {
+		 float: left;
+	 }
+	 .site-social-footer {
+		 float: right;
+	 }
+	 #page.site.yesOpen,
+	 body.sidebar-open-default #page.site {
+		 left: 330px;
+	 }
+	 .nano > .nano-content {
+		 position      : absolute;
+		 overflow      : scroll;
+		 padding: 1.5em;
+		 margin: unset;
+	 }
+	 /* overwrite style.css end */
+	 
+	 .openSearch {
+		 background-color: unset;
+	 }
+ 
+	 .menu-toggle {
+		 background: url(http://www.chicagoresourcehub.com/wp-content/uploads/2016/10/peacehub-logo-flat-transparent-back.png) 45% !important;
+		 background-size: 45% auto !important;
+		 margin: 4px;
+		 background-repeat: no-repeat !important;
+	 }
+ 
+	 .main-navigation ul li {
+		 max-width: unset;
+	 }
+ 
+	 .site-branding .site-description .site-description-text {
+		 display: none;
+	 }
+	 
+	 .site-branding .site-description .breadcrumbs {
+		 width: 100%;
+	 }
+	 
+	 .site-branding .site-description {
+			 margin: 4% 0 2% 0;
+	 }
+ 
+	 .menu-toggle i {
+		 font-size: 21px;
+		 margin-top: 0px;
+	 }
+	 
+	 .site-social {
+		 position: absolute;
+		 bottom: 100%;
+		 top: 73px;
+				 right: 0px;
+		 width: auto;
+		 font-size: 120%;
+		 text-align: left;
+	 }
+ 
+	 .openSearch .fa {
+		 color: #fff;
+	 }
+ 
+	 .search-container {
+		 top: 5%;
+	 }
+ }
+ 
+ @media screen and (max-width: 825px) {
+ 
+	 .page .entry-title {
+		 padding: 0% 10% 8% 0%;
+	 }
+ 
+	 .site-branding {
+		 margin-top: 0%;
+		 padding: 10% 2% 1% 2%;
+		 background-size: 30%;
+	 }
+ 
+	 .cl-ib-desc .wp-image-1241 {
+		 width: 50%;
+	 }
+ 
+	 .cl-ib-content {
+		 padding: 0 !important;
+	 }
+ 
+	 .cl-ib-desc {
+		 line-height: 1 !important;
+	 }
+ 
+	 #map_canvas {
+		 margin-right: 23px;
+	 }
+ 
+	 #custom-footer-copyright {
+		 padding-bottom: 60px;
+	 }
+ 
+	 .sepHentry2 {
+		 margin: 2.5em 0em;
+	 }
+ 
+ }
+ 
+ @media screen and (max-width: 775px) {
+ 
+	 #get-data-intro {
+		 margin-right: 1em !important;
+		 margin-left: 1em !important;
+		 margin-bottom: 0 !important;
+	 }
+ 
+	 #footer-widget-area {
+		 display: block !important;
+	 }
+ 
+	 .smallPart, .nav-links {
+		 font-size: 12px;
+	 }
+ 
+	 input, select, textarea {
+		 font-size: 12px;
+	 }
+ 
+	 input[type="text"], input[type="email"], input[type="url"], input[type="password"], input[type="search"], input[type="number"], input[type="tel"], input[type="range"], input[type="date"], input[type="month"], input[type="week"], input[type="time"], input[type="datetime"], input[type="datetime-local"], input[type="color"] {
+	 padding: 1px;
+	 }
+ 
+	 aside ul li ul.sub-menu, aside ul li ul.children {
+		 margin-top: 0;
+	 }
+ 
+ }
+ 
+ @media screen and (max-width: 600px) {
+	 
+	 .openSearch {
+		 background-color: unset;
+	 }
+	 
+	 .main-navigation ul li {
+		 max-width: unset;
+			 padding: 0 8%;
+	 }
+ 
+	 #thrift-shop {
+		 font-size: 10px;
+		 margin-right: 0;
+	 }
+ 
+	 .page .entry-title {
+		 padding: 0% 10% 23% 0%;
+	 }
+ 
+	 .site-branding {
+		 padding: 20% 1% 0% 2%;
+	 }
+ 
+	 .theNavigationBar {
+		 height: auto;
+		 padding: 0;
+	 }
+ 
+	 .openSidebar.yesOpen, body.sidebar-open-default .openSidebar, .openSidebar {
+		 top: 10px !important;
+			 left: 10px !important;
+	 }
+	 
+	 .openSidebar.yesOpen {
+			 position: fixed;
+	 }
+	 
+	 .openSidebar span {
+		 background: #2b2b2b;
+	 }
+}
