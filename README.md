@@ -12,6 +12,11 @@ This child theme can be plugged into **WordPress**: https://wordpress.org/ Howev
 all that is needed are some of the JS, CSS & HTML files.  The PHP is just some
 of the design stuff.
 
+* Start server and rip
+```
+$ python3 -m http.server 8000
+```
+
 * **Materialize**
 
 The ui uses materialize theme based on material design: https://materializecss.com/
