@@ -1,6 +1,6 @@
 
 $( document ).ready(function() {
-  $( "#select_type" ).click(function() {
+  $( ".input-field" ).click(function() {
     console.log(data)
   });
 });

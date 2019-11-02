@@ -1,8 +1,10 @@
 <html>
     <head>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-        <link rel="stylesheet" type="text/css" href="css/materialize.css">
+        <link rel="stylesheet" type="text/css" href="css/deps/materialize.css">
+        <link rel="stylesheet" type="text/css" href="css/custom-map.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
         <h3 style="text-align: center;">Search Human Services, Social Services Organizations, Education, Counseling, Health, and other Community Agencies</h3>
@@ -207,11 +209,18 @@
             </div>
         </div>
         <footer>
-            <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-            <script type="text/javascript" src="js/crh-data.js"></script>
-            <script type="text/javascript" src="js/search-client.js"></script>
-            <script type="text/javascript" src="js/materialize.min.js"></script>    
         </footer>
-
+        <!-- ORDER MATTERS FOR THE IMPORTING OF JS FILES -->
+        <script type="text/javascript" src="js/deps/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="js/deps/jquery.address.js"></script>
+        <script type="text/javascript" src="js/deps/materialize.min.js"></script>
+        <script type="text/javascript" src="js/crh-data.js"></script>
+        <script type="text/javascript" src="js/search-client.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('select').formSelect();
+            });
+        </script>  
     </body>
 </html>
