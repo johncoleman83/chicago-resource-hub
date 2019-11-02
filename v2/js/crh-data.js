@@ -1,7 +1,7 @@
 /*****************
 // convert json data to javascript object
 data = $.getJSON("https://www.chicagoresourcehub.com/wp-content/themes/fortunato-child/data/locations.json", function(json) {
-  console.log(json); // this will show the info it in firebug console
+  console.log(json);
 });
 
 // convert data right back to string
