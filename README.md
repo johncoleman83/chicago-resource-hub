@@ -14,7 +14,7 @@ of the design stuff.
 
 * Start server and rip
 ```
-$ python3 -m http.server 8000
+$ cd v2 && ../server-cors.py
 ```
 
 * **Materialize**

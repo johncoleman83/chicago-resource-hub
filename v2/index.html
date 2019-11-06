@@ -196,6 +196,7 @@
                 </div>
             </div>
         </div>
+        <div id='test-json-results'></div>
         <div id='listview' style='display: none;'>
             <div class='well'>
                 <table id='print-table' class='table'>
@@ -217,8 +218,9 @@
         <script type="text/javascript" src="js/deps/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="js/deps/jquery.address.js"></script>
         <script type="text/javascript" src="js/deps/materialize.min.js"></script>
-        <script type="text/javascript" src="js/crh-data.js"></script>
+        <script type="text/javascript" src="js/constants.js"></script>
         <script type="text/javascript" src="js/deps/fuse.js"></script>
+        <script type="text/javascript" src="js/fuze-google-maps-lib.js"></script>
         <script type="text/javascript" src="js/search-client.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/google-example.js"></script>
@@ -228,23 +230,6 @@
         <script>
             $(document).ready(function() {
                 $('select').formSelect();
-                var options = {
-                    shouldSort: true,
-                    tokenize: true,
-                    findAllMatches: true,
-                    includeScore: true,
-                    threshold: 0.2,
-                    location: 0,
-                    distance: 100,
-                    maxPatternLength: 20,
-                    minMatchCharLength: 1,
-                    keys: [
-                        "services"
-                    ]
-                };
-                var fuse = new Fuse(data, options); // "list" is the item array
-                var result = fuse.search("Spanish Youth");
-                console.log(result);
             });
         </script>
     </body>
