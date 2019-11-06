@@ -16,6 +16,7 @@
                     <img class="wp-image-1296 size-thumbnail aligncenter" title="Chicago Resource Hub" src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/02/chicago-resource-hub-icon-logo-greenflag-2-480x280.png" alt="chicago-resource-hub-icon-logo-greenflag-2" width="240" height="120" />
                     <div class='well' id='search-tools'>
                         <h4 style="text-align:center; margin:0 0 20px 0;">What would you like to search?</h4>
+                        <!--
                         <div class="input-field row">
                             <select id='select_type'>
                                 <option value=''> ** no specified service **</option>
@@ -142,7 +143,7 @@
                             <label class="active">Recreation, Sport, Art, Activity</label>
                         </div>
                         <div class="input-field row">
-                            <!-- NO LONGER WORKS ON INSECURE ORIGIN NEED HTTPS small style="float:right;">(<a id='find_me' href='#'>find me</a>) -->
+                            <small style="float:right;">(<a id='find_me' href='#'>find me</a>)
                             <input class='form-control' id='search_address' placeholder='enter neighborhood, intersection, or address' type='text' />
                             <label class="active">Neighborhood, Intersection, or Address</label>
                         </div>
@@ -154,6 +155,7 @@
                             </select>
                             <label class="active">within</label>
                         </div>
+                    -->
                         <div class="input-field row">
                             <input class='form-control' id='text_search' placeholder="enter keyword to search organizations" type='text' />
                             <label class="active">Organization Name</label>
@@ -216,16 +218,34 @@
         <script type="text/javascript" src="js/deps/jquery.address.js"></script>
         <script type="text/javascript" src="js/deps/materialize.min.js"></script>
         <script type="text/javascript" src="js/crh-data.js"></script>
+        <script type="text/javascript" src="js/deps/fuse.js"></script>
         <script type="text/javascript" src="js/search-client.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/google-example.js"></script>
-        <script async="false" type="text/javascript"
+        <!--script async="false" type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=<MYKEY>&callback=initMap">
-        </script>
+        </script-->
         <script>
             $(document).ready(function() {
                 $('select').formSelect();
+                var options = {
+                    shouldSort: true,
+                    tokenize: true,
+                    findAllMatches: true,
+                    includeScore: true,
+                    threshold: 0.2,
+                    location: 0,
+                    distance: 100,
+                    maxPatternLength: 20,
+                    minMatchCharLength: 1,
+                    keys: [
+                        "services"
+                    ]
+                };
+                var fuse = new Fuse(data, options); // "list" is the item array
+                var result = fuse.search("Spanish Youth");
+                console.log(result);
             });
-        </script>  
+        </script>
     </body>
 </html>
