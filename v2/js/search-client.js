@@ -2,7 +2,7 @@
 var init = function() {
     $( document ).ready(function() {
         getData().then(function (data) {
-            fuseSearch(JSON.parse(atob(data)).responseJSON)
+            fuseSearch(JSON.parse(atob(data)))
         });
     });
 }
@@ -10,7 +10,7 @@ var init = function() {
 var fuseSearch = function(data) {
     var typingTimer;
     var doneTypingInterval = SEARCH_AS_YOU_TYPE_TIMEOUT;
-    var $organizationNameInput = $( "#text_search" );
+    var $nameInput = $( "#text_search" );
 
     // $( "#search" ).click(function() {
     let doFuseSearch = function() {
@@ -25,17 +25,17 @@ var fuseSearch = function(data) {
             maxPatternLength: 20,
             minMatchCharLength: 1,
             keys: [
-                "organization"
+                "name"
             ]
         };
         let fuse = new Fuse(data, options);
-        let searchTerms = $organizationNameInput.val();
+        let searchTerms = $nameInput.val();
         let result = fuse.search(searchTerms);
         let formatedResult = result.map(function(r) {
             return [
                 "<p>",
-                "organization= ",
-                r.item.organization,
+                "name= ",
+                r.item.name,
                 ", phone= ",
                 r.item.phone,
                 ", score= ",
@@ -47,18 +47,43 @@ var fuseSearch = function(data) {
         $( "#test-json-results" ).html(formatedResult);
     };
 
+    //on keypress for enter do search
+    $nameInput.keypress(function (e) {
+        if( e.which == 13 ) {
+            clearTimeout(typingTimer);
+            doFuseSearch();
+        }
+    });
+
     //on keyup, start the countdown
-    $organizationNameInput.on('keyup', function () {
+    $nameInput.keyup(function () {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(doFuseSearch, doneTypingInterval);
     });
 
     //on keydown, clear the countdown 
-    $organizationNameInput.on('keydown', function () {
+    $nameInput.keydown(function () {
         clearTimeout(typingTimer);
     });
 };
 
+/*****************
+// convert json data to javascript object
+let r = $.getJSON("http://localhost:8000/data/locations.json", function(json) {
+  return json;
+});
+
+// convert data right back to string
+// r.responseText;
+let stringData = JSON.stringify(r.responseJSON);
+
+// convert string to base65 encoding
+let encodedData = btoa(stringData)
+
+// convert back
+let decodedData = JSON.parse(atob(encodedData))
+
+********************/
 var getData = function() {
     // fetch locations.txt via ajax & convert encoded string to json object
     return $.ajax(
