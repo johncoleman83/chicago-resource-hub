@@ -1,70 +1,106 @@
-
-var init = function() {
+let data;
+let init = function() {
     $( document ).ready(function() {
-        getData().then(function (data) {
-            fuseSearch(JSON.parse(atob(data)))
+        getData().then(function (d) {
+            data = JSON.parse(atob(d));
+            flexSearchClient(data);
         });
     });
 }
 
-var fuseSearch = function(data) {
-    var typingTimer;
-    var doneTypingInterval = SEARCH_AS_YOU_TYPE_TIMEOUT;
-    var $nameInput = $( "#text_search" );
-
-    // $( "#search" ).click(function() {
-    let doFuseSearch = function() {
-        let options = {
-            shouldSort: true,
-            tokenize: true,
-            findAllMatches: true,
-            includeScore: true,
-            threshold: 0.2,
-            location: 0,
-            distance: 100,
-            maxPatternLength: 20,
-            minMatchCharLength: 1,
-            keys: [
-                "name"
+let flexSearchClient = function(data) {
+    let $nameInput = $( "#organization-name-search" );
+    let $searchButton = $( "#search-button" );
+    let $servicesInput = $( "#services-select" );
+    let index = new FlexSearch({
+        tokenize: "forward",
+        doc: {
+            id: "id",
+            field: [
+                "name",
+                "services",
+                "description"
             ]
-        };
-        let fuse = new Fuse(data, options);
-        let searchTerms = $nameInput.val();
-        let result = fuse.search(searchTerms);
-        let formatedResult = result.map(function(r) {
+        }
+    });
+    index.add(data);
+
+    let searchCallback = function(results) {
+        let formatedResult = results.map(function(r) {
             return [
                 "<p>",
                 "name= ",
-                r.item.name,
+                r.name,
                 ", phone= ",
-                r.item.phone,
-                ", score= ",
-                Math.round((1 - r.score) * 100),
+                r.phone,
                 "</p>",
                 "<br>"
             ].join("")
         });
         $( "#test-json-results" ).html(formatedResult);
+    }
+
+    let doflexSearch = function() {
+        let nameSearchTerm = $nameInput.val().trim();
+        let serviceSearchText = $servicesInput.find("li.selected").text().trim();
+    
+        let query = []
+        if ( nameSearchTerm != "" ) {
+            query.push({
+                field: "name",
+                query: nameSearchTerm,
+                bool: "and"
+            })
+        };
+        if ( serviceSearchText != "** no specified service **") {
+            let serviceSearchTerm = $servicesInput.find("select").find("option").filter(
+                function (i, opt) {
+                    return opt.text.trim() == serviceSearchText;
+                }
+            )[0].value;
+            query.push({
+                field: "services",
+                query: serviceSearchTerm,
+                bool: "and"
+            })
+        };
+
+        results = index.search(query, DEFAULT_SEARCH_LIMIT);
+        searchCallback(results);
     };
 
-    //on keypress for enter do search
-    $nameInput.keypress(function (e) {
-        if( e.which == 13 ) {
+    let searchAsYouType = function(field) {
+        let typingTimer;
+        let doneTypingInterval = SEARCH_AS_YOU_TYPE_TIMEOUT;
+
+        //on keypress for enter do search
+        field.keypress(function (e) {
+            if ( e.which == 13 ) {
+                clearTimeout(typingTimer);
+                doflexSearch();
+            }
+        });
+
+        //on keyup, start the countdown
+        field.keyup(function () {
             clearTimeout(typingTimer);
-            doFuseSearch();
-        }
-    });
+            typingTimer = setTimeout(doflexSearch, doneTypingInterval);
+        });
 
-    //on keyup, start the countdown
-    $nameInput.keyup(function () {
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(doFuseSearch, doneTypingInterval);
-    });
+        //on keydown, clear the countdown 
+        field.keydown(function () {
+            clearTimeout(typingTimer);
+        });
+    }
 
-    //on keydown, clear the countdown 
-    $nameInput.keydown(function () {
-        clearTimeout(typingTimer);
-    });
+    let searchOnClick = function(field) {
+        field.click(function() {
+            doflexSearch();
+        });
+    }
+    searchAsYouType($nameInput);
+    searchOnClick($searchButton);
+    searchOnClick($servicesInput.find("li"));
 };
 
 /*****************
@@ -84,7 +120,7 @@ let encodedData = btoa(stringData)
 let decodedData = JSON.parse(atob(encodedData))
 
 ********************/
-var getData = function() {
+let getData = function() {
     // fetch locations.txt via ajax & convert encoded string to json object
     return $.ajax(
         {
