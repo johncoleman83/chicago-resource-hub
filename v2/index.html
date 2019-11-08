@@ -17,133 +17,58 @@
                     <div class="col s12 m5 l5 xl5">
                         <h4 style="text-align:center; margin:0 0 20px 0;">What would you like to search?</h4>
                         <div class="row">
-                            <div class="input-field col s12 m12 l12 xl12" id="services-select">
+                            <div class="input-field col s12 m12 l12 xl12" id="services-autocomplete-parent">
+                                <input id="autocomplete-input" class="autocomplete" placeholder="enter keyword to search organizations" type="text" autocomplete="vxzyvxycwqwwqcxz" />
+                                <label for="autocomplete-input">Services</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12 xl12" id="population-select">
                                 <select>
-                                    <option value=""> ** no specified service **</option>
-                                    <option value="Various">Various Services (Large Organizations)</option>
-                                    <option value="Advocacy">Advocacy/ Activism</option>
-                                    <option value="After School">After School</option>
-                                    <option value="After School Matters">After School Matters</option>
-                                    <option value="Anger">Anger Management</option>
-                                    <option value="Cash">Cash (Emergency)</option>
-                                    <option value="Case Management">Case Management (Referrals)</option>
-                                    <option value="CILA">CILA (DHS: Community Integrated Living)</option>
-                                    <option value="City Colleges of Chicago">City Colleges of Chicago</option>
-                                    <option value="Community Support">Community Support</option>
-                                    <option value="Computer">Computer, Internet, Tech Center</option>
-                                    <option value="Condom">Condom Distribution</option>
-                                    <option value="Counseling">Counseling</option>
-                                    <option value="CPS Option">CPS Option Schools for Higher Needs</option>
-                                    <option value="DACA">DACA or ITIN (Deferred Action/ Tax ID#)</option>
-                                    <option value="DHS">Department of Human Services (DHS)</option>
-                                    <option value="Domestic Violence">Domestic Violence</option>
-                                    <option value="DUI">DUI (Counseling for DUI)</option>
-                                    <option value="Early Childhood Education">Early Childhood Education</option>
-                                    <option value="Education!">Education</option>
-                                    <option value="Crisis">Emergency / Crisis</option>
-                                    <option value="Phone Number">Emergency / Crisis (Phone Number)</option>
-                                    <option value="Employment">Employment / Job</option>
-                                    <option value="Job">Employment / Job (Youth Specific)</option>
-                                    <option value="Nature">Environment, Nature, Wildlife</option>
-                                    <option value="Family Planning">Family Planning</option>
-                                    <option value="FQHC">Federally Qualified Health Care (FQHC)</option>
-                                    <option value="Financial">Financial Literacy</option>
-                                    <option value="Food">Food Groceries (Pantry)</option>
-                                    <option value="GED">GED Support/ Classes</option>
-                                    <option value="Greencorps">Greencorps</option>
-                                    <option value="Head Start">Head Start</option>
-                                    <option value="Early Head Start">Early Head Start</option>
-                                    <option value="Health Care">Health Care</option>
-                                    <option value="Phone">Help or Crisis Phone Number</option>
-                                    <option value="HIV">HIV/ AIDS (& other Sexual Health Services)</option>
-                                    <option value="Home Visits">Home Visit Services</option>
-                                    <option value="Housing">Housing (for more search "Shelter")</option>
-                                    <option value="Inpatient">Inpatient</option>
-                                    <option value="Legal">Legal</option>
-                                    <option value="Library">Library (Public)</option>
-                                    <option value="Life Skills">Life Skills</option>
-                                    <option value="Medicaid">Medicaid</option>
-                                    <option value="Medication">Medication</option>
-                                    <option value="Mentoring">Mentoring</option>
-                                    <option value="Mental Health">Mental Health Treatment</option>
-                                    <option value="Nutrition">Nutrition Counseling/ Education</option>
-                                    <option value="OBGYN">OBGYN/ Midwife</option>
-                                    <option value="One Summer Chicago">One Summer Chicago</option>
-                                    <option value="Outpatient">Outpatient</option>
-                                    <option value="Police">Police Station</option>
-                                    <option value="Internet">Public Internet</option>
-                                    <option value="Psychological Assessments">Psych Assessments /Development Evaluations</option>
-                                    <option value="Religious">Religious</option>
-                                    <option value="Residential">Residential</option>
-                                    <option value="RISE">RISE (Mentoring for Juvenile Justice)</option>
-                                    <option value="Shelter">Shelter</option>
-                                    <option value="Youth Shelter">Shelter (Youth Specific)</option>
-                                    <option value="Accepts SNAP">Accepts SNAP / EBT</option>
-                                    <option value="SNAP Application">SNAP / EBT Application & Info</option>
-                                    <option value="Soup">Soup Kitchen</option>
-                                    <option value="STD Testing">STD Testing</option>
-                                    <option value="Substance Abuse">Substance Abuse</option>
-                                    <option value="Summer">Summer Programs</option>
-                                    <option value="Support Group">Support Group</option>
-                                    <option value="TANF">TANF Temp Assist Needy Fam</option>
-                                    <option value="Taxes">Taxes (free help)</option>
-                                    <option value="Thrift Shop">Thrift Shop</option>
-                                    <option value="Tutoring">Tutoring</option>
-                                    <option value="Urban Farm">Urban Farm / Garden</option>
-                                    <option value="Warming & Cooling">Warming and Cooling Station</option>
-                                    <option value="WIC">Women, Infants, Children (WIC)</option>
-                                    <option value="WIOA">Workforce Center (WIOA)</option>
+                                    <option value="" disabled selected> ** no specified population **</option>
+                                    <option value="Asian">Asian</option>
+                                    <option value="Child">Child Specific (for more search "youth")</option>
+                                    <option value="Criminal Justice System">Criminal Justice System Involved (X-felons)</option>
+                                    <option value="DCFS">DCFS involved/ Wards/ Foster Care</option>
+                                    <option value="Disability">Disability: Serves those w/ Disabilities</option>
+                                    <option value="Gang">Gang Involved/ Affiliated</option>
+                                    <option value="Homeless">Homeless (for more search "shelter")</option>
+                                    <option value="Immigrant">Immigrant or Refugee</option>
+                                    <option value="LGBTQ">LGBTQ+ Support</option>
+                                    <option value="Parent">Parents</option>
+                                    <option value="Pregnant">Pregnant Women</option>
+                                    <option value="Senior">Senior/ Elderly</option>
+                                    <option value="Spanish">Spanish Speaking</option>
+                                    <option value="Veterans">Veterans</option>
+                                    <option value="Women">Women Specific</option>
+                                    <option value="Youth">Youth (or Child)</option>
                                 </select>
-                                <label>Services</label>
+                                <label for="population-select">Population</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12 xl12" id="activities-select">
+                                <select>
+                                    <option value="" disabled selected> ** no specified activity **</option>
+                                    <option value="Art">Art</option>
+                                    <option value="Athletics">Athletics</option>
+                                    <option value="Computer">Computer: Internet, Tech Center, Coding</option>
+                                    <option value="Design">Design: Drawing, Painting, Graphics</option>
+                                    <option value="Drama">Drama: Theater, Dance</option>
+                                    <option value="Media">Media: Music, Video</option>
+                                    <option value="Baseball">Field: Baseball</option>
+                                    <option value="Basketball">Field: Basketball Court (Outdoor)</option>
+                                    <option value="Track">Field: Track</option>
+                                    <option value="Football / Soccer">Field: Football / Soccer</option>
+                                    <option value="Fitness Center">Fitness Center</option>
+                                    <option value="Gym">Gymnasium</option>
+                                    <option value="Lifeguard">Lifeguard Training</option>
+                                    <option value="Park">Parks & Park Districts</option>
+                                    <option value="Pool">Pool</option>
+                                    <option value="Playground">Playground</option>
+                                    <option value="Recreation">Recreation</option>
+                                    <option value="Urban Farm">Urban Farm / Garden</option>
+                                </select>
+                                <label for="activities-select">Recreation, Sport, Art, Activity</label>
                             </div>
                         </div>
                         <!--
-                        <div class="input-field row">
-                            <select id="select_type2">
-                                <option value=""> ** no specified population **</option>
-                                <option value="Asian">Asian</option>
-                                <option value="Child">Child Specific (for more search "youth")</option>
-                                <option value="Criminal Justice System">Criminal Justice System Involved (X-felons)</option>
-                                <option value="DCFS">DCFS involved/ Wards/ Foster Care</option>
-                                <option value="Disability">Disability: Serves those w/ Disabilities</option>
-                                <option value="Gang">Gang Involved/ Affiliated</option>
-                                <option value="Homeless">Homeless (for more search "shelter")</option>
-                                <option value="Immigrant">Immigrant or Refugee</option>
-                                <option value="LGBTQ">LGBTQ+ Support</option>
-                                <option value="Parent">Parents</option>
-                                <option value="Pregnant">Pregnant Women</option>
-                                <option value="Senior">Senior/ Elderly</option>
-                                <option value="Spanish">Spanish Speaking</option>
-                                <option value="Veterans">Veterans</option>
-                                <option value="Women">Women Specific</option>
-                                <option value="Youth">Youth (or Child)</option>
-                            </select>
-                            <label class="active">Population</label>
-                        </div>
-                        <div class="input-field row">
-                            <select id="select_type3">
-                                <option value=""> ** no specified activity **</option>
-                                <option value="Art">Art</option>
-                                <option value="Athletics">Athletics</option>
-                                <option value="Computer">Computer: Internet, Tech Center, Coding</option>
-                                <option value="Design">Design: Drawing, Painting, Graphics</option>
-                                <option value="Drama">Drama: Theater, Dance</option>
-                                <option value="Media">Media: Music, Video</option>
-                                <option value="Baseball">Field: Baseball</option>
-                                <option value="Basketball">Field: Basketball Court (Outdoor)</option>
-                                <option value="Track">Field: Track</option>
-                                <option value="Football / Soccer">Field: Football / Soccer</option>
-                                <option value="Fitness Center">Fitness Center</option>
-                                <option value="Gym">Gymnasium</option>
-                                <option value="Lifeguard">Lifeguard Training</option>
-                                <option value="Park">Parks & Park Districts</option>
-                                <option value="Pool">Pool</option>
-                                <option value="Playground">Playground</option>
-                                <option value="Recreation">Recreation</option>
-                                <option value="Urban Farm">Urban Farm / Garden</option>
-                            </select>
-                            <label class="active">Recreation, Sport, Art, Activity</label>
-                        </div>
                         <div class="input-field row">
                             <small style="float:right;">(<a id="find_me" href="#">find me</a>)
                             <input class="form-control" id="search_address" placeholder="enter neighborhood, intersection, or address" type="text" />
@@ -160,8 +85,8 @@
                     -->
                         <div class="row">
                             <div class="input-field col s12 m12 l12 xl12">
-                                <input class="form-control" id="organization-name-search" placeholder="enter keyword to search organizations" type="text" />
-                                <label>Organization Name</label>
+                                <input id="organization-name-search" placeholder="enter keyword to search organizations" type="text" />
+                                <label for="organization-name-search">Organization Name</label>
                             </div>
                         </div>
                         <div style="text-align: center;">
@@ -200,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div id="test-json-results"></div>
+        <div id="locations-listing-view" class="row"></div>
         <div id="listview" style="display: none;">
             <div class="well">
                 <table id="print-table" class="table">
@@ -226,14 +151,19 @@
         <script type="text/javascript" src="js/deps/flexsearch.min.js"></script>
         <script type="text/javascript" src="js/flexsearch-google-maps-lib.js"></script>
         <script type="text/javascript" src="js/search-client.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/google-example.js"></script>
         <!--script async="false" type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=<MYKEY>&callback=initMap">
         </script-->
         <script>
             $(document).ready(function() {
+                // setup the input forms
                 $("select").formSelect();
+                // enable autocomplete
+                $('input.autocomplete').autocomplete({
+                    data: AUTOCOMPLETE_DATA,
+                    minLength: 0
+                });
             });
         </script>
     </body>
