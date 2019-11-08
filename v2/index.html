@@ -12,114 +12,117 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12 m12 l12 xl12">
-                <div id="search-tools">
-                    <div class="col s12 m5 l5 xl5">
-                        <h4 style="text-align:center; margin:0 0 20px 0;">What would you like to search?</h4>
-                        <div class="row">
-                            <div class="input-field col s12 m12 l12 xl12" id="services-autocomplete-parent">
-                                <input id="autocomplete-input" class="autocomplete" placeholder="enter keyword to search organizations" type="text" autocomplete="vxzyvxycwqwwqcxz" />
-                                <label for="autocomplete-input">Services</label>
-                            </div>
-                            <div class="input-field col s12 m12 l12 xl12" id="population-select">
-                                <select>
-                                    <option value="" disabled selected> ** no specified population **</option>
-                                    <option value="Asian">Asian</option>
-                                    <option value="Child">Child Specific (for more search "youth")</option>
-                                    <option value="Criminal Justice System">Criminal Justice System Involved (X-felons)</option>
-                                    <option value="DCFS">DCFS involved/ Wards/ Foster Care</option>
-                                    <option value="Disability">Disability: Serves those w/ Disabilities</option>
-                                    <option value="Gang">Gang Involved/ Affiliated</option>
-                                    <option value="Homeless">Homeless (for more search "shelter")</option>
-                                    <option value="Immigrant">Immigrant or Refugee</option>
-                                    <option value="LGBTQ">LGBTQ+ Support</option>
-                                    <option value="Parent">Parents</option>
-                                    <option value="Pregnant">Pregnant Women</option>
-                                    <option value="Senior">Senior/ Elderly</option>
-                                    <option value="Spanish">Spanish Speaking</option>
-                                    <option value="Veterans">Veterans</option>
-                                    <option value="Women">Women Specific</option>
-                                    <option value="Youth">Youth (or Child)</option>
-                                </select>
-                                <label for="population-select">Population</label>
-                            </div>
-                            <div class="input-field col s12 m12 l12 xl12" id="activities-select">
-                                <select>
-                                    <option value="" disabled selected> ** no specified activity **</option>
-                                    <option value="Art">Art</option>
-                                    <option value="Athletics">Athletics</option>
-                                    <option value="Computer">Computer: Internet, Tech Center, Coding</option>
-                                    <option value="Design">Design: Drawing, Painting, Graphics</option>
-                                    <option value="Drama">Drama: Theater, Dance</option>
-                                    <option value="Media">Media: Music, Video</option>
-                                    <option value="Baseball">Field: Baseball</option>
-                                    <option value="Basketball">Field: Basketball Court (Outdoor)</option>
-                                    <option value="Track">Field: Track</option>
-                                    <option value="Football / Soccer">Field: Football / Soccer</option>
-                                    <option value="Fitness Center">Fitness Center</option>
-                                    <option value="Gym">Gymnasium</option>
-                                    <option value="Lifeguard">Lifeguard Training</option>
-                                    <option value="Park">Parks & Park Districts</option>
-                                    <option value="Pool">Pool</option>
-                                    <option value="Playground">Playground</option>
-                                    <option value="Recreation">Recreation</option>
-                                    <option value="Urban Farm">Urban Farm / Garden</option>
-                                </select>
-                                <label for="activities-select">Recreation, Sport, Art, Activity</label>
-                            </div>
-                        </div>
-                        <!--
-                        <div class="input-field row">
-                            <small style="float:right;">(<a id="find_me" href="#">find me</a>)
-                            <input class="form-control" id="search_address" placeholder="enter neighborhood, intersection, or address" type="text" />
-                            <label class="active">Neighborhood, Intersection, or Address</label>
-                        </div>
-                        <div class="input-field row">
-                            <select id="search_radius">
-                                <option value="4830">3 miles</option>
-                                <option value="1610">1 mile</option>
-                                <option value="805">1/2 mile</option>
-                            </select>
-                            <label class="active">within</label>
-                        </div>
-                    -->
-                        <div class="row">
-                            <div class="input-field col s12 m12 l12 xl12">
-                                <input id="organization-name-search" placeholder="enter keyword to search organizations" type="text" />
-                                <label for="organization-name-search">Organization Name</label>
-                            </div>
-                        </div>
-                        <div style="text-align: center;">
-                            <a class="custom-map-btn btn-primary" id="search-button" href="#services-list"><i class="glyphicon glyphicon-search"></i> Search</a> <a class="custom-map-btn btn-primary" id="reset" href="#services-list"><i class="glyphicon glyphicon-repeat"></i> Reset</a> <a class="custom-map-btn btn-primary" id="viewmode"><i class="fa fa-list"></i> List View</a>
-                        </div>
+            <div id="search-tools" class="col s12 m4 l4 xl4">
+                <h4 style="text-align:center; margin:0 0 20px 0;">What would you like to search?</h4>
+                <div class="row">
+                    <div class="input-field col s12 m12 l12 xl12" id="services-autocomplete-parent">
+                        <input id="autocomplete-input" class="autocomplete" placeholder="enter keyword to search organizations" type="text" autocomplete="vxzyvxycwqwwqcxz" />
+                        <label for="autocomplete-input">Services</label>
                     </div>
                 </div>
-                <div id="map-key">
-                    <div class="col s12 m5 l5 xl5">
-                        <div class="card-panel">
-                            <h4 style="text-align:center;">Map Key & other Tools</h4>
-                            <div class="row">
-                                <div class="col s12 m6 l6 xl6">
-                                    <ul class="collection" style="list-style:none; margin:0;">
-                                        <li class="collection-item">
-                                            <a href="http://peacehubchicago.org/partners/" target="_blank"><img src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/10/map-flag.png" /> PEACE HUB Partner Organization</a>
-                                        </li>
-                                        <li class="collection-item"><img src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/10/white-marker-circle.png" />Large Organizations with "Various" Services &amp; Locations</li>
-                                        <li class="collection-item"><img title="general locations" alt="general locations" src="http://www.chicagoresourcehub.com/wp-content/uploads/2017/06/blue-dot.png" width="24" height="24" /> Any general location of a source</li>
-                                        <li class="collection-item"><img title="Link Card Locations" src="http://www.chicagoresourcehub.com/wp-content/uploads/2017/06/white-dot.png" alt="pencil" width="24" height="24" /> Grocery that Accepts EBT (Link Card)</li>
-                                    </ul>
-                                </div>
-                                <div class="col s12 m6 l6 xl6">
-                                    <ul class="collection" style="list-style:none; margin:0;">
-                                        <li class="collection-item">
-                                            <a href="http://www.chicagoresourcehub.com/edit-database/" target="_blank"><img title="Edit Database" src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/05/ph-pencil.png" alt="pencil" width="24" height="24" /> Edit Listing or Add Organization to Database</a>
-                                        </li class="collection-item">
-                                        <li class="collection-item"><a href="http://www.chicagoresourcehub.com/hints/" onclick="window.open(this.href, "Hints", "resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no,width=500,left=100,height=500,top=200"); return false;" style="font-size: 20px;"><i class="fa fa-question-circle" aria-hidden="true"></i>  Search Engine Notes: Hints & Help</a></li>
-                                        <li class="collection-item"><a href="javascript:window.print()"><i class="fa fa-print"></i>  Print "List View" Results</a></li>
-                                    </ul>
-                                    <center>Share this Free Tool:[addtoany]</center>
-                                </div>
-                            </div>
+                <div class="row">
+                    <div class="input-field col s12 m12 l12 xl12" id="population-select">
+                        <select>
+                            <option value=""> ** no specified population **</option>
+                            <option value="Asian">Asian</option>
+                            <option value="Child">Child Specific (for more search "youth")</option>
+                            <option value="Criminal Justice System">Criminal Justice System Involved (X-felons)</option>
+                            <option value="DCFS">DCFS involved/ Wards/ Foster Care</option>
+                            <option value="Disability">Disability: Serves those w/ Disabilities</option>
+                            <option value="Gang">Gang Involved/ Affiliated</option>
+                            <option value="Homeless">Homeless (for more search "shelter")</option>
+                            <option value="Immigrant">Immigrant or Refugee</option>
+                            <option value="LGBTQ">LGBTQ+ Support</option>
+                            <option value="Parent">Parents</option>
+                            <option value="Pregnant">Pregnant Women</option>
+                            <option value="Senior">Senior/ Elderly</option>
+                            <option value="Spanish">Spanish Speaking</option>
+                            <option value="Veterans">Veterans</option>
+                            <option value="Women">Women Specific</option>
+                            <option value="Youth">Youth (or Child)</option>
+                        </select>
+                        <label for="population-select">Population</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m12 l12 xl12" id="activities-select">
+                        <select>
+                            <option value=""> ** no specified activity **</option>
+                            <option value="Art">Art</option>
+                            <option value="Athletics">Athletics</option>
+                            <option value="Computer">Computer: Internet, Tech Center, Coding</option>
+                            <option value="Design">Design: Drawing, Painting, Graphics</option>
+                            <option value="Drama">Drama: Theater, Dance</option>
+                            <option value="Media">Media: Music, Video</option>
+                            <option value="Baseball">Field: Baseball</option>
+                            <option value="Basketball">Field: Basketball Court (Outdoor)</option>
+                            <option value="Track">Field: Track</option>
+                            <option value="Football / Soccer">Field: Football / Soccer</option>
+                            <option value="Fitness Center">Fitness Center</option>
+                            <option value="Gym">Gymnasium</option>
+                            <option value="Lifeguard">Lifeguard Training</option>
+                            <option value="Park">Parks & Park Districts</option>
+                            <option value="Pool">Pool</option>
+                            <option value="Playground">Playground</option>
+                            <option value="Recreation">Recreation</option>
+                            <option value="Urban Farm">Urban Farm / Garden</option>
+                        </select>
+                        <label for="activities-select">Recreation, Sport, Art, Activity</label>
+                    </div>
+                </div>
+                <!--
+                    <div class="input-field row">
+                        <small style="float:right;">(<a id="find_me" href="#">find me</a>)
+                        <input class="form-control" id="search_address" placeholder="enter neighborhood, intersection, or address" type="text" />
+                        <label class="active">Neighborhood, Intersection, or Address</label>
+                    </div>
+                    <div class="input-field row">
+                        <select id="search_radius">
+                            <option value="4830">3 miles</option>
+                            <option value="1610">1 mile</option>
+                            <option value="805">1/2 mile</option>
+                        </select>
+                        <label class="active">within</label>
+                    </div>
+                -->
+                <div class="row">
+                    <div class="input-field col s12 m12 l12 xl12">
+                        <input id="organization-name-search" placeholder="enter keyword to search organizations" type="text" />
+                        <label for="organization-name-search">Organization Name</label>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <a class="btn btn-large waves-effect waves-light" id="search-button" href="#services-list"><i class="glyphicon glyphicon-search"></i> Search</a> <a class="btn btn-large waves-effect waves-light" id="reset" href="#services-list"><i class="glyphicon glyphicon-repeat"></i> Reset</a> <a class="btn btn-large waves-effect waves-light" id="viewmode"><i class="fa fa-list"></i> List View</a>
+                </div>
+            </div>
+            <div id="maps-wrapper" class="col s12 m8 l8 xl8">
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="row" style="display:none;">
+            <div id="map-key" class="col s12 m5 l5 xl5">
+                <div class="card-panel">
+                    <h4 style="text-align:center;">Map Key & other Tools</h4>
+                    <div class="row">
+                        <div class="col s12 m6 l6 xl6">
+                            <ul class="collection" style="list-style:none; margin:0;">
+                                <li class="collection-item">
+                                    <a href="http://peacehubchicago.org/partners/" target="_blank"><img src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/10/map-flag.png" /> PEACE HUB Partner Organization</a>
+                                </li>
+                                <li class="collection-item"><img src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/10/white-marker-circle.png" />Large Organizations with "Various" Services &amp; Locations</li>
+                                <li class="collection-item"><img title="general locations" alt="general locations" src="http://www.chicagoresourcehub.com/wp-content/uploads/2017/06/blue-dot.png" width="24" height="24" /> Any general location of a source</li>
+                                <li class="collection-item"><img title="Link Card Locations" src="http://www.chicagoresourcehub.com/wp-content/uploads/2017/06/white-dot.png" alt="pencil" width="24" height="24" /> Grocery that Accepts EBT (Link Card)</li>
+                            </ul>
+                        </div>
+                        <div class="col s12 m6 l6 xl6">
+                            <ul class="collection" style="list-style:none; margin:0;">
+                                <li class="collection-item">
+                                    <a href="http://www.chicagoresourcehub.com/edit-database/" target="_blank"><img title="Edit Database" src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/05/ph-pencil.png" alt="pencil" width="24" height="24" /> Edit Listing or Add Organization to Database</a>
+                                </li class="collection-item">
+                                <li class="collection-item"><a href="http://www.chicagoresourcehub.com/hints/" onclick="window.open(this.href, "Hints", "resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no,width=500,left=100,height=500,top=200"); return false;" style="font-size: 20px;"><i class="fa fa-question-circle" aria-hidden="true"></i>  Search Engine Notes: Hints & Help</a></li>
+                                <li class="collection-item"><a href="javascript:window.print()"><i class="fa fa-print"></i>  Print "List View" Results</a></li>
+                            </ul>
+                            <center>Share this Free Tool:[addtoany]</center>
                         </div>
                     </div>
                 </div>
@@ -150,11 +153,11 @@
         <script type="text/javascript" src="js/constants.js"></script>
         <script type="text/javascript" src="js/deps/flexsearch.min.js"></script>
         <script type="text/javascript" src="js/flexsearch-google-maps-lib.js"></script>
+        <script type="text/javascript" src="js/google-maps.js"></script>
         <script type="text/javascript" src="js/search-client.js"></script>
-        <script type="text/javascript" src="js/google-example.js"></script>
-        <!--script async="false" type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=<MYKEY>&callback=initMap">
-        </script-->
+        <script async="false" type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=<HIDDEN>=initMap">
+        </script>
         <script>
             $(document).ready(function() {
                 // setup the input forms

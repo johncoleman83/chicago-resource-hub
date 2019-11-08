@@ -29,8 +29,8 @@ let flexSearchClient = function(data) {
     });
     index.add(data);
 
-    let searchCallback = async (results) => {
-        let formatedLocations = htmlFormatFor(results);
+    let searchCallback = async (locations) => {
+        let formatedLocations = htmlFormatFor(locations);
         $( "#locations-listing-view" ).html(formatedLocations);
         $(".tabs").tabs();
     }
@@ -77,8 +77,11 @@ let flexSearchClient = function(data) {
             })
         }
 
-        results = index.search(query, DEFAULT_SEARCH_LIMIT);
-        searchCallback(results);
+        if ( query.length >= 1 ) {
+            locations = index.search(query, DEFAULT_SEARCH_LIMIT);
+            searchCallback(locations);
+            displayOnMapFor(locations);
+        }
     };
 
     let searchAsYouType = function(field) {
