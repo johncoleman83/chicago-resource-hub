@@ -35,13 +35,16 @@
   content: "\e030";
 }
 
-#maps-wrapper {
-
-}
-
 #map {
   position: relative;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
   overflow: hidden;
+}
+
+.location-icon {
+  padding-right: 15px;
+}
+
+.location-info {
+  font-size: 18px;
 }

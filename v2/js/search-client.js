@@ -122,63 +122,17 @@ let flexSearchClient = function(data) {
     searchOnClick($activitiesInput.find("li"));
 };
 
-let formatOneLocation = function (l) {
-    return [
-        '<div class="col s12 m6 l6 xl6">',
-        '<h5>' + l.name + '</h5>',
-        '<div class="card">',
-        '<div class="row card-content">',
-        '<div class="col s12 m6 l6 xl 6">',
-        '<p class="location-address">' + l.address + '</p>',
-        '<p class="location-phone">' + l.phone + '</p>',
-        '</div>',
-        '<div class="col s12 m6 l6 xl 6">',
-        '<p class="location-website">',
-        '<a href="' + l.website + '" target="blank">' + l.website + '</a>',
-        '</p>',
-        '</div>',
-        '</div>',
-        '<div class="card-tabs">',
-        '<ul class="tabs tabs-fixed-width">',
-        '<li class="tab"><a href="#services-' + l.id + '" class="active">Services</a></li>',
-        '<li class="tab"><a href="#description-' + l.id + '">Description</a></li>',
-        '</ul>',
-        '</div>',
-        '<div class="card-content grey lighten-4">',
-        '<div id="services-' + l.id + '">' + l.services + '</div>',
-        '<div id="description-' + l.id + '">',
-        l.description == "" ? "None Provided" : l.description,
-        '</div>',
-        '</div>',
-        '</div>',
-        '</div>'
-    ].join("")
-}
-
-let htmlFormatFor = function (results) {
-    formatedLocations = results.map(function(r) {
-        return formatOneLocation(r)
+let htmlFormatFor = function (locations) {
+    formatedLocations = locations.map(function(l) {
+        return [
+            '<div class="col s12 m6 l6 xl6">',
+            formatOneLocation(l),
+            '</div>'
+        ].join("")
     });
     return formatedLocations.join("")
 }
 
-/*****************
-// convert json data to javascript object
-let r = $.getJSON("http://localhost:8000/data/locations.json", function(json) {
-  return json;
-});
-
-// convert data right back to string
-// r.responseText;
-let stringData = JSON.stringify(r.responseJSON);
-
-// convert string to base65 encoding
-let encodedData = btoa(stringData)
-
-// convert back
-let decodedData = JSON.parse(atob(encodedData))
-
-********************/
 let getData = function() {
     // fetch locations.txt via ajax & convert encoded string to json object
     return $.ajax(

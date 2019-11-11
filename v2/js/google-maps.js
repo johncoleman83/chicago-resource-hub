@@ -1,38 +1,34 @@
 var map;
 
-function displayOnMapFor(locations) {  
-  /*
-    var contentString2 = '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>'+
-        '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-        '<div id="bodyContent">'+
-        '<p><b>kantju</b>, also referred to as <b>Ayers Rock</b>, is a large </p>' +
-        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-        'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-        '(last visited June 22, 2009).</p>'+
-        '</div>'+
-        '</div>';
+function displayOnMapFor(locations) {
+  clearOverlays();
+  $.each(locations, function(i, l) {
+       let marker = createGoogleMarkerFor(l);
+       let infowindow = createGoogleInfoWindowFor(l);
+       marker.addListener('click', function() {
+           infowindow.open(map, marker);
+       });
+       google.maps.event.addListener(infowindow, 'domready', function() {
+           $(".tabs").tabs();
+           //$('.collapsible').collapsible(); 
+       });
+       markersArray.push(marker);
+   });
+}
 
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString2
+let createGoogleInfoWindowFor = function (l) {
+    return new google.maps.InfoWindow({
+      content: formatOneLocation(l)
     });
-  */
-  for ( let i in locations ) {
-    let l = locations[i];
-    new google.maps.Marker({
+}
+
+let createGoogleMarkerFor = function (l) {
+    return new google.maps.Marker({
       position: { lat: Number(l.latitude), lng: Number(l.longitude) },
       map: map,
       title: l.name,
       visible: true
     });
-  }
-
-  /*
-    marker2.addListener('click', function() {
-      infowindow.open(map2, marker2);
-    });
-  */
 }
 
 
@@ -41,15 +37,4 @@ function initMap() {
     zoom: DEFAULT_ZOOM,
     center: CHICAGO
   });
-  new google.maps.Marker({
-    position: CHICAGO,
-    map: map,
-    title: 'Hello World!'
-  });
 }
-
-$(document).ready(function() {
-  $( "#cross" ).click(function() {
-    showAnother();
-    });
-});
