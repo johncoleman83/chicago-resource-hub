@@ -42,7 +42,6 @@ let flexSearchClient = function(data) {
         let activitiesSearchText = $activitiesInput.find("li.selected").text().trim();
     
         let query = []
-        let servicesQuery = "";
         if ( nameSearchTerm != "" ) {
             query.push({
                 field: "name",
@@ -50,6 +49,7 @@ let flexSearchClient = function(data) {
                 bool: "and"
             })
         };
+        let servicesQuery = "";
         if ( serviceSearchTerm != "" ) {
             servicesQuery += serviceSearchTerm
         };
@@ -78,7 +78,10 @@ let flexSearchClient = function(data) {
         }
 
         if ( query.length >= 1 ) {
-            locations = index.search(query, DEFAULT_SEARCH_LIMIT);
+            locations = index.search(
+                query,
+                DEFAULT_SEARCH_LIMIT
+            );
             searchCallback(locations);
             displayOnMapFor(locations);
         }
