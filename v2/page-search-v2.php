@@ -130,7 +130,7 @@ dynamic_sidebar('footer-widget-3');
         <!-- BEGIN EDIT ADD FOOTER Copyright -->
 <p id="custom-footer-copyright" style="text-align: center;">
 	<a href="http://www.chicagoresourcehub.com/terms-of-use">Terms of Use & Policies</a>
-	路 developed by: <a href="http://www.davidjohncoleman.com" target="_blank">davidjohncoleman.com</a>
+	developed by: <a href="http://www.davidjohncoleman.com" target="_blank">davidjohncoleman.com</a>
 </p>
         <!-- END EDIT ADD FOOTER Copyright -->
 	</footer><!-- #colophon -->
@@ -160,7 +160,7 @@ dynamic_sidebar('footer-widget-3');
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/google-maps.js"></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/search-client.js"></script>
 <script async="false" type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=<HIDDEN>&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=<HIDDEN>&region=US&libraries=places&callback=initMap">
 </script>
 <script>
 $(document).ready(function() {

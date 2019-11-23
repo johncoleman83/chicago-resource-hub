@@ -13,7 +13,9 @@ let flexSearchClient = function(data) {
     let $nameInput = $( "#organization-name-search" );
     let $servicesInput = $( "#autocomplete-input" );
     let $populationInput = $( "#population-select" );
+    let $populationList = $( "#population-list" );
     let $activitiesInput = $( "#activities-select" );
+    let $activitiesList = $( "#activities-list" );
     let $searchButton = $( "#search-button" );
 
     let index = new FlexSearch({
@@ -38,8 +40,8 @@ let flexSearchClient = function(data) {
     let doflexSearch = function() {
         let nameSearchTerm = $nameInput.val().trim();
         let serviceSearchTerm = $servicesInput.val().trim();
-        let populationSearchText = $populationInput.find("li.selected").text().trim();
-        let activitiesSearchText = $activitiesInput.find("li.selected").text().trim();
+        let populationSearchText = $populationInput.val();
+        let activitiesSearchText = $activitiesInput.val();
     
         let query = []
         if ( nameSearchTerm != "" ) {
@@ -50,25 +52,10 @@ let flexSearchClient = function(data) {
             })
         };
         let servicesQuery = "";
-        if ( serviceSearchTerm != "" ) {
-            servicesQuery += serviceSearchTerm
-        };
-        if ( populationSearchText != "** no specified population **") {
-            let populationSearchTerm = $populationInput.find("select").find("option").filter(
-                function (i, opt) {
-                    return opt.text.trim() == populationSearchText;
-                }
-            )[0].value;
-            servicesQuery += " " +  populationSearchTerm
-        };
-        if ( activitiesSearchText != "** no specified activity **") {
-            let activitiesSearchTerm = $activitiesInput.find("select").find("option").filter(
-                function (i, opt) {
-                    return opt.text.trim() == activitiesSearchText;
-                }
-            )[0].value;
-            servicesQuery += " " + activitiesSearchTerm
-        };
+        servicesQuery += serviceSearchTerm
+        servicesQuery += " " +  populationSearchText
+        servicesQuery += " " + activitiesSearchText
+
         if ( servicesQuery != "" ) {
             query.push({
                 field: "services",
@@ -84,6 +71,8 @@ let flexSearchClient = function(data) {
             );
             searchCallback(locations);
             displayOnMapFor(locations);
+        } else {
+            clearOverlays();
         }
     };
 
@@ -121,8 +110,8 @@ let flexSearchClient = function(data) {
 
     searchOnClick($searchButton);
     searchOnClick($( "#services-autocomplete-parent" ).children());
-    searchOnClick($populationInput.find("li"));
-    searchOnClick($activitiesInput.find("li"));
+    searchOnClick($populationList.find("li"));
+    searchOnClick($activitiesList.find("li"));
 };
 
 let htmlFormatFor = function (locations) {

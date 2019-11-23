@@ -24,51 +24,51 @@
                 </div>
                 <label class="large-label col s12 m12 l12 sx12" for="population-select">Population</label>
                 <div class="row">
-                    <div class="input-field col s12 m12 l12 xl12" id="population-select">
-                        <select>
-                        <option value=""> ** no specified population **</option>
-                        <option value="Asian">Asian</option>
-                        <option value="Child">Child Specific (for more search "youth")</option>
-                        <option value="Criminal Justice System">Criminal Justice System Involved (X-felons)</option>
-                        <option value="DCFS">DCFS involved/ Wards/ Foster Care</option>
-                        <option value="Disability">Disability: Serves those w/ Disabilities</option>
-                        <option value="Gang">Gang Involved/ Affiliated</option>
-                        <option value="Homeless">Homeless (for more search "shelter")</option>
-                        <option value="Immigrant">Immigrant or Refugee</option>
-                        <option value="LGBTQ">LGBTQ+ Support</option>
-                        <option value="Parent">Parents</option>
-                        <option value="Pregnant">Pregnant Women</option>
-                        <option value="Senior">Senior/ Elderly</option>
-                        <option value="Spanish">Spanish Speaking</option>
-                        <option value="Veterans">Veterans</option>
-                        <option value="Women">Women Specific</option>
-                        <option value="Youth">Youth (or Child)</option>
+                    <div class="input-field col s12 m12 l12 xl12" id="population-list">
+                        <select id="population-select">
+                            <option value=""> ** no specified population **</option>
+                            <option value="Asian">Asian</option>
+                            <option value="Child">Child Specific (for more search "youth")</option>
+                            <option value="Criminal Justice System">Criminal Justice System Involved (X-felons)</option>
+                            <option value="DCFS">DCFS involved/ Wards/ Foster Care</option>
+                            <option value="Disability">Disability: Serves those w/ Disabilities</option>
+                            <option value="Gang">Gang Involved/ Affiliated</option>
+                            <option value="Homeless">Homeless (for more search "shelter")</option>
+                            <option value="Immigrant">Immigrant or Refugee</option>
+                            <option value="LGBTQ">LGBTQ+ Support</option>
+                            <option value="Parent">Parents</option>
+                            <option value="Pregnant">Pregnant Women</option>
+                            <option value="Senior">Senior/ Elderly</option>
+                            <option value="Spanish">Spanish Speaking</option>
+                            <option value="Veterans">Veterans</option>
+                            <option value="Women">Women Specific</option>
+                            <option value="Youth">Youth (or Child)</option>
                         </select>
                     </div>
                 </div>
                 <label for="activities-select" class="large-label col s12 m12 l12 sx12">Recreation, Sport, Art, Activity</label>
                 <div class="row">
-                    <div class="input-field col s12 m12 l12 xl12" id="activities-select">
-                        <select>
-                        <option value=""> ** no specified activity **</option>
-                        <option value="Art">Art</option>
-                        <option value="Athletics">Athletics</option>
-                        <option value="Computer">Computer: Internet, Tech Center, Coding</option>
-                        <option value="Design">Design: Drawing, Painting, Graphics</option>
-                        <option value="Drama">Drama: Theater, Dance</option>
-                        <option value="Media">Media: Music, Video</option>
-                        <option value="Baseball">Field: Baseball</option>
-                        <option value="Basketball">Field: Basketball Court (Outdoor)</option>
-                        <option value="Track">Field: Track</option>
-                        <option value="Football / Soccer">Field: Football / Soccer</option>
-                        <option value="Fitness Center">Fitness Center</option>
-                        <option value="Gym">Gymnasium</option>
-                        <option value="Lifeguard">Lifeguard Training</option>
-                        <option value="Park">Parks &amp; Park Districts</option>
-                        <option value="Pool">Pool</option>
-                        <option value="Playground">Playground</option>
-                        <option value="Recreation">Recreation</option>
-                        <option value="Urban Farm">Urban Farm / Garden</option>
+                    <div class="input-field col s12 m12 l12 xl12" id="activities-list">
+                        <select id="activities-select">
+                            <option value=""> ** no specified activity **</option>
+                            <option value="Art">Art</option>
+                            <option value="Athletics">Athletics</option>
+                            <option value="Computer">Computer: Internet, Tech Center, Coding</option>
+                            <option value="Design">Design: Drawing, Painting, Graphics</option>
+                            <option value="Drama">Drama: Theater, Dance</option>
+                            <option value="Media">Media: Music, Video</option>
+                            <option value="Baseball">Field: Baseball</option>
+                            <option value="Basketball">Field: Basketball Court (Outdoor)</option>
+                            <option value="Track">Field: Track</option>
+                            <option value="Football / Soccer">Field: Football / Soccer</option>
+                            <option value="Fitness Center">Fitness Center</option>
+                            <option value="Gym">Gymnasium</option>
+                            <option value="Lifeguard">Lifeguard Training</option>
+                            <option value="Park">Parks &amp; Park Districts</option>
+                            <option value="Pool">Pool</option>
+                            <option value="Playground">Playground</option>
+                            <option value="Recreation">Recreation</option>
+                            <option value="Urban Farm">Urban Farm / Garden</option>
                         </select>
                     </div>
                 </div>
@@ -78,13 +78,17 @@
                         <input id="organization-name-search" placeholder="enter keyword to search organizations" type="text">
                     </div>
                 </div>
+                <label class="large-label col s12 m12 l12 sx12" for="localize-search-box">Neighborhood or Address</label>
+                <div class="row">
+                    <div class="input-field col s12 m12 l12 xl12">
+                        <input id="pac-input" placeholder="center your search to a specific location" type="text">
+                    </div>
+                </div>
                 <div class="row" style="text-align: center;">
                     <div class="col s6 m6 l6 xl6">
-                        <a class="btn btn-large waves-effect waves-light" id="search-button"><i class="glyphicon glyphicon-search"></i> Search</a>
-                    </div>
+                        <a class="btn btn-large waves-effect waves-light" id="search-button"><i class="glyphicon glyphicon-search"></i> Search</a></div>
                     <div class="col s6 m6 l6 xl6">
-                        <a class="btn btn-large waves-effect waves-light" id="search-reset"><i class="glyphicon glyphicon-repeat"></i> Reset</a>
-                    </div>
+                        <a class="btn btn-large waves-effect waves-light" id="search-reset"><i class="glyphicon glyphicon-repeat"></i> Reset</a></div>
                 </div>
             </div>
             <div id="maps-wrapper" class="col s12 m8 l8 xl8">
