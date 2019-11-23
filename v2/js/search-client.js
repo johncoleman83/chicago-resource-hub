@@ -1,4 +1,5 @@
 let data;
+let pagination = [];
 
 let init = function() {
     $( document ).ready(function() {
@@ -40,35 +41,39 @@ let flexSearchClient = function(data) {
     let doflexSearch = function() {
         let nameSearchTerm = $nameInput.val().trim();
         let serviceSearchTerm = $servicesInput.val().trim();
-        let populationSearchText = $populationInput.val();
-        let activitiesSearchText = $activitiesInput.val();
+        let populationSearchText = $populationInput.val().trim();
+        let activitiesSearchText = $activitiesInput.val().trim();
     
-        let query = []
+        let searchTerms = "";
+        let fields = []
         if ( nameSearchTerm != "" ) {
-            query.push({
-                field: "name",
-                query: nameSearchTerm,
-                bool: "and"
-            })
+            searchTerms += nameSearchTerm;
+            fields.push("name")
+            fields.push("description")
         };
-        let servicesQuery = "";
-        servicesQuery += serviceSearchTerm
-        servicesQuery += " " +  populationSearchText
-        servicesQuery += " " + activitiesSearchText
 
-        if ( servicesQuery != "" ) {
-            query.push({
-                field: "services",
-                query: servicesQuery,
-                bool: "and"
-            })
+        if ( populationSearchText != "" ) {
+            serviceSearchTerm += " " + populationSearchText;
+        }
+        if ( activitiesSearchText != "" ) {
+            serviceSearchTerm += " " + activitiesSearchText;
+        }
+        if ( serviceSearchTerm != "" ) {
+            searchTerms += " " + serviceSearchTerm;
+            fields.push("services")
         }
 
-        if ( query.length >= 1 ) {
-            locations = index.search(
-                query,
-                DEFAULT_SEARCH_LIMIT
+        if ( searchTerms != "" ) {
+            let result = index.search(
+                {
+                    query: searchTerms,
+                    bool: "or",
+                    field: fields,
+                    limit: DEFAULT_SEARCH_LIMIT,
+                    page: true
+                }
             );
+            let locations = result.result;
             searchCallback(locations);
             displayOnMapFor(locations);
         } else {
