@@ -1,5 +1,7 @@
 let data;
-let pagination = [];
+let pagination = [true];
+let paginationIndex = 0;
+let paginationQuery;
 
 let init = function() {
     $( document ).ready(function() {
@@ -10,6 +12,13 @@ let init = function() {
     });
 }
 
+let resetPagination = function() {
+    pagination.length = 0;
+    pagination.push(true);
+    paginationIndex = 0;
+    paginationQuery = null;
+}
+
 let flexSearchClient = function(data) {
     let $nameInput = $( "#organization-name-search" );
     let $servicesInput = $( "#autocomplete-input" );
@@ -18,6 +27,8 @@ let flexSearchClient = function(data) {
     let $activitiesInput = $( "#activities-select" );
     let $activitiesList = $( "#activities-list" );
     let $searchButton = $( "#search-button" );
+    let $paginationBack = $( "#pagination-back" );
+    let $paginationForward = $( "#pagination-forward" );
 
     let index = new FlexSearch({
         tokenize: "forward",
@@ -37,8 +48,33 @@ let flexSearchClient = function(data) {
         $( "#locations-listing-view" ).html(formatedLocations);
         $(".tabs").tabs();
     }
-
+    
+    let doflexSearchWithPagination = function (query) {
+        query.page = pagination[paginationIndex]
+        let result = index.search(query);
+        let locations = result.result;
+        if ( locations.length <= 0 )  {
+            return;
+        }
+        if ( result.next ) {
+            pagination.push(result.next);
+            paginationIndex += 1;
+        }
+        searchCallback(locations);
+        displayOnMapFor(locations);
+    }
+    
     let doflexSearch = function() {
+        resetPagination();
+        let query = buildSearchQuery();
+        paginationQuery = query;
+        if ( !query ) {
+            return;
+        }
+        doflexSearchWithPagination(query);
+    }
+
+    let buildSearchQuery = function() {
         let nameSearchTerm = $nameInput.val().trim();
         let serviceSearchTerm = $servicesInput.val().trim();
         let populationSearchText = $populationInput.val().trim();
@@ -63,21 +99,17 @@ let flexSearchClient = function(data) {
             fields.push("services")
         }
 
-        if ( searchTerms != "" ) {
-            let result = index.search(
-                {
-                    query: searchTerms,
-                    bool: "or",
-                    field: fields,
-                    limit: DEFAULT_SEARCH_LIMIT,
-                    page: true
-                }
-            );
-            let locations = result.result;
-            searchCallback(locations);
-            displayOnMapFor(locations);
+        if ( searchTerms.trim() != "" ) {
+            return {
+                query: searchTerms.trim(),
+                bool: "or",
+                field: fields,
+                limit: DEFAULT_SEARCH_LIMIT,
+                page: true
+            };
         } else {
             clearOverlays();
+            return null;
         }
     };
 
@@ -110,6 +142,21 @@ let flexSearchClient = function(data) {
             doflexSearch();
         });
     }
+    
+    let paginateOnClick = function() {
+        $paginationBack.click(function() {
+            if ( paginationIndex > 0 ) {
+                paginationIndex -= 1;
+                doflexSearchWithPagination(paginationQuery);
+            }
+        });
+        $paginationForward.click(function() {
+            if ( paginationIndex < pagination.length - 1) {
+                paginationIndex += 1;
+                doflexSearchWithPagination(paginationQuery);
+            }
+        });
+    }
     searchAsYouType($nameInput);
     searchAsYouType($servicesInput);
 
@@ -117,6 +164,7 @@ let flexSearchClient = function(data) {
     searchOnClick($( "#services-autocomplete-parent" ).children());
     searchOnClick($populationList.find("li"));
     searchOnClick($activitiesList.find("li"));
+    //paginateOnClick();
 };
 
 let htmlFormatFor = function (locations) {
