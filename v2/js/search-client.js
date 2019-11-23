@@ -1,7 +1,7 @@
-let data;
-let pagination = [true];
-let paginationIndex = 0;
-let paginationQuery;
+var data;
+var paginationIndex = 0;
+var paginationQuery;
+var paginationMore = true;
 
 let init = function() {
     $( document ).ready(function() {
@@ -13,23 +13,65 @@ let init = function() {
 }
 
 let resetPagination = function() {
-    pagination.length = 0;
-    pagination.push(true);
     paginationIndex = 0;
     paginationQuery = null;
+    paginationMore = true;
 }
 
-let flexSearchClient = function(data) {
-    let $nameInput = $( "#organization-name-search" );
-    let $servicesInput = $( "#autocomplete-input" );
-    let $populationInput = $( "#population-select" );
-    let $populationList = $( "#population-list" );
-    let $activitiesInput = $( "#activities-select" );
-    let $activitiesList = $( "#activities-list" );
-    let $searchButton = $( "#search-button" );
-    let $paginationBack = $( "#pagination-back" );
-    let $paginationForward = $( "#pagination-forward" );
+let buildSearchQuery = function() {
+    let nameInput = $( "#organization-name-search" );
+    let servicesInput = $( "#autocomplete-input" );
+    let populationInput = $( "#population-select" );
+    let activitiesInput = $( "#activities-select" );
+        
+    let nameSearchTerm = nameInput.val().trim();
+    let serviceSearchTerm = servicesInput.val().trim();
+    let populationSearchText = populationInput.val().trim();
+    let activitiesSearchText = activitiesInput.val().trim();
+    
+    let searchTerms = "";
+    let fields = []
+    if ( nameSearchTerm != "" ) {
+        searchTerms += nameSearchTerm;
+        fields.push("name")
+        fields.push("description")
+    };
 
+    if ( populationSearchText != "" ) {
+        serviceSearchTerm += " " + populationSearchText;
+    }
+    if ( activitiesSearchText != "" ) {
+        serviceSearchTerm += " " + activitiesSearchText;
+    }
+    if ( serviceSearchTerm != "" ) {
+        searchTerms += " " + serviceSearchTerm;
+        fields.push("services")
+    }
+
+    if ( searchTerms.trim() != "" ) {
+        return {
+            query: searchTerms.trim(),
+            bool: "or",
+            field: fields,
+            limit: DEFAULT_SEARCH_LIMIT,
+            page: true
+        };
+    } else {
+        clearOverlays();
+        return null;
+    }
+};
+
+let paginationOffset = function () {
+    if ( paginationIndex == 0 ) {
+        return true;
+    }
+    let offset = paginationIndex * DEFAULT_SEARCH_LIMIT;
+    return offset.toString();
+}
+
+
+let flexSearchClient = function(data) {
     let index = new FlexSearch({
         tokenize: "forward",
         doc: {
@@ -50,15 +92,20 @@ let flexSearchClient = function(data) {
     }
     
     let doflexSearchWithPagination = function (query) {
-        query.page = pagination[paginationIndex]
-        let result = index.search(query);
+        if ( !query )   {
+            return;
+        }
+
+        query.page = paginationOffset();
+        query.limit = DEFAULT_SEARCH_LIMIT;
+
+        let result = index.search(query.query, query);
         let locations = result.result;
         if ( locations.length <= 0 )  {
             return;
         }
-        if ( result.next ) {
-            pagination.push(result.next);
-            paginationIndex += 1;
+        if ( !result.next ) {
+            paginationMore = false;
         }
         searchCallback(locations);
         displayOnMapFor(locations);
@@ -68,50 +115,8 @@ let flexSearchClient = function(data) {
         resetPagination();
         let query = buildSearchQuery();
         paginationQuery = query;
-        if ( !query ) {
-            return;
-        }
         doflexSearchWithPagination(query);
     }
-
-    let buildSearchQuery = function() {
-        let nameSearchTerm = $nameInput.val().trim();
-        let serviceSearchTerm = $servicesInput.val().trim();
-        let populationSearchText = $populationInput.val().trim();
-        let activitiesSearchText = $activitiesInput.val().trim();
-    
-        let searchTerms = "";
-        let fields = []
-        if ( nameSearchTerm != "" ) {
-            searchTerms += nameSearchTerm;
-            fields.push("name")
-            fields.push("description")
-        };
-
-        if ( populationSearchText != "" ) {
-            serviceSearchTerm += " " + populationSearchText;
-        }
-        if ( activitiesSearchText != "" ) {
-            serviceSearchTerm += " " + activitiesSearchText;
-        }
-        if ( serviceSearchTerm != "" ) {
-            searchTerms += " " + serviceSearchTerm;
-            fields.push("services")
-        }
-
-        if ( searchTerms.trim() != "" ) {
-            return {
-                query: searchTerms.trim(),
-                bool: "or",
-                field: fields,
-                limit: DEFAULT_SEARCH_LIMIT,
-                page: true
-            };
-        } else {
-            clearOverlays();
-            return null;
-        }
-    };
 
     let searchAsYouType = function(field) {
         let typingTimer;
@@ -144,19 +149,29 @@ let flexSearchClient = function(data) {
     }
     
     let paginateOnClick = function() {
-        $paginationBack.click(function() {
-            if ( paginationIndex > 0 ) {
+        let paginationBack = $( "#pagination-back" );
+        let paginationForward = $( "#pagination-forward" );
+        
+        paginationBack.click(function() {
+            if ( paginationIndex > 0 && paginationQuery) {
                 paginationIndex -= 1;
+                paginationMore = true;
                 doflexSearchWithPagination(paginationQuery);
             }
         });
-        $paginationForward.click(function() {
-            if ( paginationIndex < pagination.length - 1) {
+        paginationForward.click(function() {
+            if ( paginationMore && paginationQuery) {
                 paginationIndex += 1;
                 doflexSearchWithPagination(paginationQuery);
             }
         });
     }
+    let $nameInput = $( "#organization-name-search" );
+    let $servicesInput = $( "#autocomplete-input" );
+    let $populationList = $( "#population-list" );
+    let $activitiesList = $( "#activities-list" );
+    let $searchButton = $( "#search-button" );
+
     searchAsYouType($nameInput);
     searchAsYouType($servicesInput);
 
@@ -164,7 +179,7 @@ let flexSearchClient = function(data) {
     searchOnClick($( "#services-autocomplete-parent" ).children());
     searchOnClick($populationList.find("li"));
     searchOnClick($activitiesList.find("li"));
-    //paginateOnClick();
+    paginateOnClick();
 };
 
 let htmlFormatFor = function (locations) {
