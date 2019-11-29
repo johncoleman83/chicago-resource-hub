@@ -1,31 +1,36 @@
 var map;
-var markersArray = [];
+var allMarkersList = [];
+var customBounds = null;
 
 let clearOverlays = function () {
-    for (var i = 0; i < markersArray.length; i++ ) {
-        markersArray[i].setMap(null);
-        markersArray[i] = null;
+    for (var i = 0; i < allMarkersList.length; i++ ) {
+        allMarkersList[i].setMap(null);
+        allMarkersList[i] = null;
     }
-    markersArray.length = 0;
+    allMarkersList.length = 0;
     map.setZoom(11);
 }
 
 let displayOnMapFor = function (locations) {
-   clearOverlays();
-   
-   $.each(locations, function(i, l) {
-        let marker = createGoogleMarkerFor(l);
-        let infowindow = createGoogleInfoWindowFor(l);
-        marker.addListener('click', function() {
-            infowindow.open(map, marker);
-        });
-        google.maps.event.addListener(map, "click", function() {
-            infowindow.close();
-        });
-        google.maps.event.addListener(infowindow, 'domready', function() {
-            $(".tabs").tabs();
-        });
-        markersArray.push(marker);
+    clearOverlays();
+    let current_view_port = customBounds || map.getBounds();
+
+    $.each(locations, function(i, l) {
+        let placeCoordinates =  { lat: Number(l.latitude), lng: Number(l.longitude) };
+        if ( current_view_port.contains(placeCoordinates) ) {
+            let marker = createGoogleMarkerFor(l, placeCoordinates);
+            let infowindow = createGoogleInfoWindowFor(l);
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+            google.maps.event.addListener(map, "click", function() {
+                infowindow.close();
+            });
+            google.maps.event.addListener(infowindow, 'domready', function() {
+                $(".tabs").tabs();
+            });
+            allMarkersList.push(marker);
+        }
     });
 }
 
@@ -35,9 +40,9 @@ let createGoogleInfoWindowFor = function (l) {
     });
 }
 
-let createGoogleMarkerFor = function (l) {
+let createGoogleMarkerFor = function (l, placeCoordinates) {
     return new google.maps.Marker({
-      position: { lat: Number(l.latitude), lng: Number(l.longitude) },
+      position: placeCoordinates,
       map: map,
       title: l.name,
       visible: true,
@@ -73,6 +78,7 @@ let initSearchBox = function () {
                 console.log("Returned place contains no geometry");
                 return;
             }
+            console.log(place.geometry.viewport);
             if (place.geometry.viewport) {
                 // Only geocodes have viewport.
                 bounds.union(place.geometry.viewport);
@@ -82,6 +88,7 @@ let initSearchBox = function () {
         });
         map.fitBounds(bounds);
         map.setZoom(14);
+        customBounds = bounds;
     });
 }
 

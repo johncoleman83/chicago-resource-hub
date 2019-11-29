@@ -1,21 +1,45 @@
 var data;
+var index;
 var paginationIndex = 0;
-var paginationQuery;
+var paginationQuery = null;
 var paginationMore = true;
 
 let init = function() {
     $( document ).ready(function() {
         getData().then(function (d) {
-            data = JSON.parse(atob(d));
-            flexSearchClient(data);
+            initSearch(d);
         });
     });
 }
 
-let resetPagination = function() {
-    paginationIndex = 0;
-    paginationQuery = null;
-    paginationMore = true;
+let initSearch = function (d) {
+    data = JSON.parse(atob(d));
+    index = createSearchIndex(data);
+    index.add(data);
+    setupSearch();
+}
+
+let createSearchIndex = function (data) {
+    return new FlexSearch({
+        tokenize: "forward",
+        doc: {
+            id: "id",
+            field: [
+                "name",
+                "services",
+                "description"
+            ]
+        }
+    });
+}
+
+let shouldDoNewSearch = function(query) {
+    if ( !paginationQuery ) {
+        return true;
+    }
+    let queryIsEqual = paginationQuery.query === query.query;
+    let fieldIsEqual = paginationQuery.field.sort().join('') === query.field.sort().join('');;
+    return !queryIsEqual || !fieldIsEqual;
 }
 
 let buildSearchQuery = function() {
@@ -60,7 +84,14 @@ let buildSearchQuery = function() {
         clearOverlays();
         return null;
     }
-};
+}
+
+let resetPagination = function() {
+    paginationIndex = 0;
+    paginationQuery = null;
+    paginationMore = true;
+    $( "#pagination-back" ).addClass("disabled");
+}
 
 let paginationOffset = function () {
     if ( paginationIndex == 0 ) {
@@ -71,27 +102,14 @@ let paginationOffset = function () {
 }
 
 
-let flexSearchClient = function(data) {
-    let index = new FlexSearch({
-        tokenize: "forward",
-        doc: {
-            id: "id",
-            field: [
-                "name",
-                "services",
-                "description"
-            ]
-        }
-    });
-    index.add(data);
-
+let setupSearch = function() {
     let searchCallback = async (locations) => {
         let formatedLocations = htmlFormatFor(locations);
         $( "#locations-listing-view" ).html(formatedLocations);
         $(".tabs").tabs();
     }
     
-    let doflexSearchWithPagination = function (query) {
+    let doSearchWithPagination = function (query) {
         if ( !query )   {
             return;
         }
@@ -101,21 +119,28 @@ let flexSearchClient = function(data) {
 
         let result = index.search(query.query, query);
         let locations = result.result;
-        if ( locations.length <= 0 )  {
+        let totalResults = locations.length;
+        if ( totalResults <= 0 ) {
             return;
         }
         if ( !result.next ) {
             paginationMore = false;
+            $( "#pagination-forward" ).addClass("disabled");
+        } else {
+             $( "#pagination-forward" ).removeClass("disabled");
         }
         searchCallback(locations);
         displayOnMapFor(locations);
+        updateResultsWindow(totalResults, paginationMore);
     }
     
-    let doflexSearch = function() {
-        resetPagination();
+    let doSearch = function() {
         let query = buildSearchQuery();
-        paginationQuery = query;
-        doflexSearchWithPagination(query);
+        if ( shouldDoNewSearch(query) ) {
+            resetPagination();
+            paginationQuery = query;
+            doSearchWithPagination(query);
+        }
     }
 
     let searchAsYouType = function(field) {
@@ -126,14 +151,14 @@ let flexSearchClient = function(data) {
         field.keypress(function (e) {
             if ( e.which == 13 ) {
                 clearTimeout(typingTimer);
-                doflexSearch();
+                doSearch();
             }
         });
 
         //on keyup, start the countdown
         field.keyup(function () {
             clearTimeout(typingTimer);
-            typingTimer = setTimeout(doflexSearch, doneTypingInterval);
+            typingTimer = setTimeout(doSearch, doneTypingInterval);
         });
 
         //on keydown, clear the countdown 
@@ -144,43 +169,49 @@ let flexSearchClient = function(data) {
 
     let searchOnClick = function(field) {
         field.click(function() {
-            doflexSearch();
+            doSearch();
         });
     }
     
     let paginateOnClick = function() {
-        let paginationBack = $( "#pagination-back" );
-        let paginationForward = $( "#pagination-forward" );
-        
-        paginationBack.click(function() {
+        $( "#pagination-back" ).click(function() {
             if ( paginationIndex > 0 && paginationQuery) {
                 paginationIndex -= 1;
                 paginationMore = true;
-                doflexSearchWithPagination(paginationQuery);
+                doSearchWithPagination(paginationQuery);
+                if ( paginationIndex == 0) {
+                    $( "#pagination-back" ).addClass("disabled");
+                }
+                if ( $( "#pagination-forward" ).hasClass("disabled") ) {
+                    $( "#pagination-forward" ).removeClass("disabled");
+                }
             }
         });
-        paginationForward.click(function() {
+        $( "#pagination-forward" ).click(function() {
             if ( paginationMore && paginationQuery) {
                 paginationIndex += 1;
-                doflexSearchWithPagination(paginationQuery);
+                doSearchWithPagination(paginationQuery);
+                if ( $( "#pagination-back" ).hasClass("disabled") ) {
+                    $( "#pagination-back" ).removeClass("disabled");
+                }
             }
         });
     }
-    let $nameInput = $( "#organization-name-search" );
-    let $servicesInput = $( "#autocomplete-input" );
-    let $populationList = $( "#population-list" );
-    let $activitiesList = $( "#activities-list" );
-    let $searchButton = $( "#search-button" );
 
-    searchAsYouType($nameInput);
-    searchAsYouType($servicesInput);
+    searchAsYouType($( "#organization-name-search" ));
+    searchAsYouType($( "#autocomplete-input" ));
 
-    searchOnClick($searchButton);
+    searchOnClick($( "#search-button" ));
     searchOnClick($( "#services-autocomplete-parent" ).children());
-    searchOnClick($populationList.find("li"));
-    searchOnClick($activitiesList.find("li"));
+    searchOnClick($( "#population-list" ).find("li"));
+    searchOnClick($( "#activities-list" ).find("li"));
     paginateOnClick();
 };
+
+let updateResultsWindow = function (totalResults, paginationMore) {
+    let formatted = htmlFormatForResultsWindow(totalResults, paginationMore);
+    $( '#results-window' ).html(formatted);
+}
 
 let htmlFormatFor = function (locations) {
     formatedLocations = locations.map(function(l) {
