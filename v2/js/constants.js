@@ -1,7 +1,7 @@
 const SEARCH_AS_YOU_TYPE_TIMEOUT = 4000;
 const DEFAULT_SEARCH_LIMIT = 100;
 const DEFAULT_ZOOM = 11;
-const CHICAGO = { lat: 41.8339037, lng: -87.8720478 };
+const CHICAGO = { lat: 41.85187182891432, lng: -87.69695319550783 };
 
 const LOCAL_DATA = "http://localhost:8000/data/locations.txt";
 const PROD_DATA = "https://www.chicagoresourcehub.com/wp-content/themes/fortunato-child/data/locations.txt";
