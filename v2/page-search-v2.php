@@ -156,9 +156,8 @@ dynamic_sidebar('footer-widget-3');
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/deps/materialize.min.js"></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/deps/flexsearch.min.js"></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/constants.js"></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/html-formater.js"></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/google-maps.js"></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/search-client.js"></script>
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/maps-lib-v2.js"></script>
+
 <!-- the main maps lib setup -->
 <script>
 	var mapInterface = new MapsLibV2();
