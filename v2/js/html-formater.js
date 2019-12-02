@@ -8,6 +8,20 @@ let randomString = function (length) {
   return result;
 }
 
+let htmlFormatForResultsWindow = function (totalResults, paginationMore) {
+  let moreMessage;
+  if ( paginationMore ) {
+      moreMessage = 'Click to see more results.'
+  } else {
+      moreMessage = 'There are no more results.'
+  }
+  return [
+      '<p>Displayed Results: ' + totalResults + '<br>',
+      moreMessage,
+      '</p>'
+  ].join("");
+}
+
 let formatOneLocation = function (l) {
   // if using this solution, need to add: `$(".tabs").tabs();` after template rendered
   let hash = l.id + '-' + randomString(8)
@@ -52,5 +66,5 @@ let formatOneLocation = function (l) {
       '</div>',
       '</div>',
       '</div>',
-  ].join("")
+  ].join("");
 }

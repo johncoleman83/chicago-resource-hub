@@ -1,36 +1,32 @@
 var map;
-var allMarkersList = [];
+var displayedMarkersList = [];
 var customBounds = null;
 
 let clearOverlays = function () {
-    for (var i = 0; i < allMarkersList.length; i++ ) {
-        allMarkersList[i].setMap(null);
-        allMarkersList[i] = null;
+    for (var i = 0; i < displayedMarkersList.length; i++ ) {
+        displayedMarkersList[i].setMap(null);
+        displayedMarkersList[i] = null;
     }
-    allMarkersList.length = 0;
-    map.setZoom(11);
+    displayedMarkersList.length = 0;
 }
 
 let displayOnMapFor = function (locations) {
     clearOverlays();
-    let current_view_port = customBounds || map.getBounds();
 
     $.each(locations, function(i, l) {
         let placeCoordinates =  { lat: Number(l.latitude), lng: Number(l.longitude) };
-        if ( current_view_port.contains(placeCoordinates) ) {
-            let marker = createGoogleMarkerFor(l, placeCoordinates);
-            let infowindow = createGoogleInfoWindowFor(l);
-            marker.addListener('click', function() {
-                infowindow.open(map, marker);
-            });
-            google.maps.event.addListener(map, "click", function() {
-                infowindow.close();
-            });
-            google.maps.event.addListener(infowindow, 'domready', function() {
-                $(".tabs").tabs();
-            });
-            allMarkersList.push(marker);
-        }
+        let marker = createGoogleMarkerFor(l, placeCoordinates);
+        let infowindow = createGoogleInfoWindowFor(l);
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+        google.maps.event.addListener(map, "click", function() {
+            infowindow.close();
+        });
+        google.maps.event.addListener(infowindow, 'domready', function() {
+            $(".tabs").tabs();
+        });
+        displayedMarkersList.push(marker);
     });
 }
 
@@ -54,7 +50,7 @@ let initSearchBox = function () {
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
-    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function() {
@@ -89,7 +85,34 @@ let initSearchBox = function () {
         map.fitBounds(bounds);
         map.setZoom(14);
         customBounds = bounds;
+
+        createNewIndexForCustomBounds();
     });
+}
+
+let customBoundsDoesContain = function (location) {
+    let markerLatLng = new google.maps.LatLng({lat: location.latitude, lng: location.longitude}); 
+
+    return customBounds.contains(markerLatLng);
+}
+
+let createNewIndexForCustomBounds = function () {
+    $.each(data, function(i, location) {
+        if ( customBoundsDoesContain(location) ) {
+            customData.push(location);
+        }
+    })
+    queriableIndex = createSearchIndex(customData);
+}
+
+let resetMap = function () {
+    clearOverlays();
+    map.setZoom(11);
+    customData.length = 0;
+    customBounds = null;
+    queriableIndex = index;
+    repeatedSearchIsAllowed = true;
+    $( '#pac-input' ).val("");
 }
 
 function initMap() {
@@ -100,7 +123,7 @@ function initMap() {
     });
     let $searchReset = $( "#search-reset" );
     $searchReset.click(function() {
-        clearOverlays();
+        resetMap();
     });
     initSearchBox();
 }

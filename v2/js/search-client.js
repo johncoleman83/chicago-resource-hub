@@ -2,7 +2,10 @@ var data;
 var index;
 var paginationIndex = 0;
 var paginationQuery = null;
+var queriableIndex = null;
 var paginationMore = true;
+var repeatedSearchIsAllowed = false
+var customData = [];
 
 let init = function() {
     $( document ).ready(function() {
@@ -15,12 +18,12 @@ let init = function() {
 let initSearch = function (d) {
     data = JSON.parse(atob(d));
     index = createSearchIndex(data);
-    index.add(data);
+    queriableIndex = index;
     setupSearch();
 }
 
 let createSearchIndex = function (data) {
-    return new FlexSearch({
+    let tempIndex = new FlexSearch({
         tokenize: "forward",
         doc: {
             id: "id",
@@ -31,6 +34,8 @@ let createSearchIndex = function (data) {
             ]
         }
     });
+    tempIndex.add(data);
+    return tempIndex;
 }
 
 let shouldDoNewSearch = function(query) {
@@ -39,7 +44,7 @@ let shouldDoNewSearch = function(query) {
     }
     let queryIsEqual = paginationQuery.query === query.query;
     let fieldIsEqual = paginationQuery.field.sort().join('') === query.field.sort().join('');;
-    return !queryIsEqual || !fieldIsEqual;
+    return !queryIsEqual || repeatedSearchIsAllowed || !fieldIsEqual;
 }
 
 let buildSearchQuery = function() {
@@ -110,6 +115,7 @@ let setupSearch = function() {
     }
     
     let doSearchWithPagination = function (query) {
+        repeatedSearchIsAllowed = false;
         if ( !query )   {
             return;
         }
@@ -117,7 +123,7 @@ let setupSearch = function() {
         query.page = paginationOffset();
         query.limit = DEFAULT_SEARCH_LIMIT;
 
-        let result = index.search(query.query, query);
+        let result = queriableIndex.search(query.query, query);
         let locations = result.result;
         let totalResults = locations.length;
         if ( totalResults <= 0 ) {
