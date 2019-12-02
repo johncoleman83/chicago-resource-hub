@@ -16,13 +16,18 @@ of the design stuff.
 
 The ui uses materialize theme based on material design: https://materializecss.com/
 
-* V1
+* **FlexSearch**
 
-**Google Fusion**
+The Data Store of locations is queried using FlexSearch: https://github.com/nextapps-de/flexsearch
 
-This tool interacts with Google Fusion Tables Database using the Google Rest API: https://developers.google.com/fusiontables/
+### V1
 
-* V2
+(Now Deprecated) This tool interacted with **Google Fusion** Tables Database using the Google Rest API: https://developers.google.com/fusiontables/
+
+### V2
+
+Current Version of Map Search Tool and Google Maps API.
+This uses an  in-memory data store, FlexSearch Search API, & Google Maps API 
 
 * Start server and rip
 ```
