@@ -9,11 +9,7 @@
 
   <body>
 
-
-    <!--
-            END CUSTOM HTML FOR LOCAL
-            BEGIN CODE THAT GOES TO WORDPRESS PAGE
-        -->
+    <!-- END CUSTOM HTML FOR LOCAL BEGIN CODE THAT GOES TO WORDPRESS PAGE -->
 
     <div class="row" id="map-container">
       <div id="search-tools" class="col s12 m4 l4 xl4">
@@ -88,12 +84,61 @@
         </div>
         <div class="row" style="text-align: center;">
           <div class="col s6 m6 l6 xl6">
-            <a class="btn btn-large waves-effect waves-light" id="search-button"><i class="glyphicon glyphicon-search"></i> Search</a></div>
+            <a class="btn btn-large waves-effect waves-light disabled" id="search-button"><i class="glyphicon glyphicon-search"></i> Search</a></div>
           <div class="col s6 m6 l6 xl6">
-            <a class="btn btn-large waves-effect waves-light" id="search-reset"><i class="glyphicon glyphicon-repeat"></i> Reset</a></div>
+            <a class="btn btn-large waves-effect waves-light disabled" id="search-reset"><i class="glyphicon glyphicon-repeat"></i> Reset</a></div>
         </div>
         <div class="row" style="text-align: center;">
           <div class="col s12 m12 l12 xl12" id="results-window">
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+
+              <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+
+              <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+
+              <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row" style="text-align: center;">
@@ -111,10 +156,7 @@
       <div id="locations-listing-view" class="row"></div>
     </div>
 
-    <!--
-            END CODE THAT GOES TO WORDPRESS PAGE
-            BEGIN CUSTOM HTML FOR LOCAL
-        -->
+    <!-- END CODE THAT GOES TO WORDPRESS PAGE BEGIN CUSTOM HTML FOR LOCAL -->
 
     <footer>
     </footer>
