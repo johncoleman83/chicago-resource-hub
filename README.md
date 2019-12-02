@@ -4,7 +4,7 @@
 
 https://www.chicagoresourcehub.com/
 
-## Development
+## Dependencies
 
 * **WordPress**
 
@@ -20,6 +20,8 @@ The ui uses materialize theme based on material design: https://materializecss.c
 
 The Data Store of locations is queried using FlexSearch: https://github.com/nextapps-de/flexsearch
 
+## About
+
 ### V1
 
 (Now Deprecated) This tool interacted with **Google Fusion** Tables Database using the Google Rest API: https://developers.google.com/fusiontables/
@@ -29,7 +31,9 @@ The Data Store of locations is queried using FlexSearch: https://github.com/next
 Current Version of Map Search Tool and Google Maps API.
 This uses an  in-memory data store, FlexSearch Search API, & Google Maps API 
 
-* Start server and rip
+## Usage
+
+* Start server and begin!
 ```
 $ cd v2 && ../server-cors.py
 ```
