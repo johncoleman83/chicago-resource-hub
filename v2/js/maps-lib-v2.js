@@ -3,11 +3,13 @@ class MapsLibV2 {
     // Search Setup
     this.data = null;
     this.index = null;
-    this.paginationIndex = 0;
     this.paginationQuery = null;
     this.queriableIndex = null;
+
     this.paginationMore = true;
     this.repeatedSearchIsAllowed = false
+    
+    this.paginationIndex = 0;
     this.customData = [];
 
     // Maps Setup
@@ -16,7 +18,7 @@ class MapsLibV2 {
     this.customBounds = null;
   }
 
-  // static method
+  // called to get datastore for client side
   static getData() {
     // fetch locations.txt via ajax & convert encoded string to json object
     return $.ajax({
@@ -25,7 +27,12 @@ class MapsLibV2 {
     });
   };
 
-  // Maps Functions
+  /**
+   * 
+   * Google Maps API
+   * 
+   */
+
   initMap() {
     this.map = new google.maps.Map(document.getElementById('map'), {
       zoom: DEFAULT_ZOOM,
@@ -113,7 +120,6 @@ class MapsLibV2 {
           console.log("Returned place contains no geometry");
           return;
         }
-        console.log(place.geometry.viewport);
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
           bounds.union(place.geometry.viewport);
@@ -157,8 +163,11 @@ class MapsLibV2 {
     $('#pac-input').val("");
   }
 
-
-  // Search Functions
+  /**
+   * 
+   * Search API
+   * 
+   */
 
   initSearch(d) {
     this.data = JSON.parse(atob(d));
@@ -183,6 +192,10 @@ class MapsLibV2 {
     return tempIndex;
   }
 
+  queryDidChange(query) {
+    return this.paginationQuery.query !== query.query || this.paginationQuery.field.sort().join('') !== query.field.sort().join('');
+  }
+
   shouldDoNewSearch(query) {
     if (!this.paginationQuery) {
       return true;
@@ -190,9 +203,8 @@ class MapsLibV2 {
     if (!query) {
       return false;
     }
-    let queryIsEqual = this.paginationQuery.query === query.query;
-    let fieldIsEqual = this.paginationQuery.field.sort().join('') === query.field.sort().join('');;
-    return !queryIsEqual || this.repeatedSearchIsAllowed || !fieldIsEqual;
+
+    return this.queryDidChange(query) || this.repeatedSearchIsAllowed;
   }
 
   buildSearchQuery() {
@@ -207,17 +219,17 @@ class MapsLibV2 {
       searchTerms += nameSearchTerm;
       fields.push("name")
       fields.push("description")
-    };
-
-    if (populationSearchText != "") {
-      serviceSearchTerm += " " + populationSearchText;
-    }
-    if (activitiesSearchText != "") {
-      serviceSearchTerm += " " + activitiesSearchText;
-    }
-    if (serviceSearchTerm != "") {
-      searchTerms += " " + serviceSearchTerm;
-      fields.push("services")
+    } else {
+      if (populationSearchText != "") {
+        serviceSearchTerm += " " + populationSearchText;
+      }
+      if (activitiesSearchText != "") {
+        serviceSearchTerm += " " + activitiesSearchText;
+      }
+      if (serviceSearchTerm != "") {
+        searchTerms += " " + serviceSearchTerm.trim();
+        fields.push("services")
+      }
     }
 
     if (searchTerms.trim() != "") {
@@ -249,8 +261,16 @@ class MapsLibV2 {
     return offset.toString();
   }
 
-  // Search Functions
+  /**
+   * 
+   * Query FlexSearch Functions
+   * 
+   */
+
   async searchCallback(locations) {
+    if ( locations.length <= 0 ) {
+        return;
+    }
     let formatedLocations = this.htmlFormatFor(locations);
     $("#locations-listing-view").html(formatedLocations);
     $(".tabs").tabs();
@@ -259,6 +279,7 @@ class MapsLibV2 {
   doSearchWithPagination() {
     let query = this.paginationQuery;
     this.repeatedSearchIsAllowed = false;
+
     if (!query) {
       return;
     }
@@ -269,9 +290,6 @@ class MapsLibV2 {
     let result = this.queriableIndex.search(query.query, query);
     let locations = result.result;
     let totalResults = locations.length;
-    if (totalResults <= 0) {
-      return;
-    }
     if (!result.next) {
       this.paginationMore = false;
       $("#pagination-forward").addClass("disabled");
@@ -283,8 +301,7 @@ class MapsLibV2 {
     this.updateResultsWindow(totalResults);
   }
 
-  doSearch() {
-    let query = this.buildSearchQuery();
+  doSearch(query) {
     if (this.shouldDoNewSearch(query)) {
       this.resetPagination();
       this.paginationQuery = query;
@@ -292,7 +309,12 @@ class MapsLibV2 {
     }
   }
 
-  // Setup search event handlers
+  /**
+   * 
+   * Search Event Handlers
+   * 
+   */
+  
   searchAsYouType(field) {
     let typingTimer;
     let doneTypingInterval = SEARCH_AS_YOU_TYPE_TIMEOUT;
@@ -301,14 +323,16 @@ class MapsLibV2 {
     field.keypress((e) => {
       if (e.which == 13) {
         clearTimeout(typingTimer);
-        this.doSearch();
+        this.doSearch(this.buildSearchQuery());
       }
     });
 
     //on keyup, start the countdown
     field.keyup(() => {
       clearTimeout(typingTimer);
-      typingTimer = setTimeout(this.doSearch, doneTypingInterval);
+      typingTimer = setTimeout(() => {
+          this.doSearch(this.buildSearchQuery());
+      }, doneTypingInterval);
     });
 
     //on keydown, clear the countdown 
@@ -319,7 +343,7 @@ class MapsLibV2 {
 
   searchOnClick(field) {
     field.click(() => {
-      this.doSearch();
+      this.doSearch(this.buildSearchQuery());
     });
   }
 
@@ -357,9 +381,14 @@ class MapsLibV2 {
     this.searchOnClick($("#population-list").find("li"));
     this.searchOnClick($("#activities-list").find("li"));
     this.paginateOnClick();
+    this.updateResultsWindow(0);
   };
 
-  // HTML Formatters
+  /**
+   * 
+   * HTML Formatters
+   * 
+   */
 
   randomString(length) {
     var result           = '';
@@ -376,7 +405,7 @@ class MapsLibV2 {
     if ( paginationMore ) {
         moreMessage = 'Click to see more results.'
     } else {
-        moreMessage = 'There are no more results.'
+        moreMessage = 'There are no results, modify search terms to see results.'
     }
     return [
         '<p>Displayed Results: ' + totalResults + '<br>',
@@ -386,7 +415,6 @@ class MapsLibV2 {
   }
   
   formatOneLocation(l) {
-    // if using this solution, need to add: `$(".tabs").tabs();` after template rendered
     let hash = l.id + '-' + this.randomString(8)
   
     return [
@@ -431,7 +459,6 @@ class MapsLibV2 {
         '</div>',
     ].join("");
   }
-  
 
   updateResultsWindow(totalResults) {
     let formatted = this.htmlFormatForResultsWindow(totalResults, this.paginationMore);

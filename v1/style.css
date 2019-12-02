@@ -1,6 +1,6 @@
 /*
 Theme Name: Fortunato Child
-Theme URI: http://evicdesign.com
+Theme URI: http://davidjohncoleman.com
 Author: David John Coleman II
 Author URI: http://davidjohncoleman.com
 Template: fortunato
@@ -138,7 +138,7 @@ modified in the Theme Fortunato style.css. The changes were to:
  }
  
  .main-navigation ul li {
-	 max-width: 227px;
+	 max-width: 250px;
  }
  
  .main-navigation ul li:hover > a, 
@@ -639,7 +639,7 @@ modified in the Theme Fortunato style.css. The changes were to:
 	 }
  
 	 .menu-toggle {
-		 background: url(http://www.chicagoresourcehub.com/wp-content/uploads/2016/10/peacehub-logo-flat-transparent-back.png) 45% !important;
+		 background: url(https://www.chicagoresourcehub.com/wp-content/uploads/2016/10/peacehub-logo-flat-transparent-back.png) 45% !important;
 		 background-size: 45% auto !important;
 		 margin: 4px;
 		 background-repeat: no-repeat !important;
@@ -794,4 +794,5 @@ modified in the Theme Fortunato style.css. The changes were to:
 	 .openSidebar span {
 		 background: #2b2b2b;
 	 }
-}
+ }
+ 
