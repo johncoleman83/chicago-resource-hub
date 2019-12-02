@@ -159,9 +159,30 @@ dynamic_sidebar('footer-widget-3');
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/html-formater.js"></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/google-maps.js"></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/search-client.js"></script>
+<!-- the main maps lib setup -->
+<script>
+	var mapInterface = new MapsLibV2();
+
+  function initMap() {
+		mapInterface.initMap();
+	}
+	
+	function initSearch() {
+    $(document).ready(function() {
+      MapsLibV2.getData().then(function(d) {
+        mapInterface.initSearch(d);
+      });
+    });
+	}
+	
+	initSearch();
+</script>
+
 <script async="false" type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=<HIDDEN>&region=US&libraries=places&callback=initMap">
 </script>
+
+<!-- setup materialize stuff -->
 <script>
 $(document).ready(function() {
     // setup the input forms
