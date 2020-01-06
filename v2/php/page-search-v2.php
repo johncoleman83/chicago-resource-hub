@@ -102,29 +102,29 @@
 	</div><!-- #content -->
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
-		 <!-- BEGIN ADD FOOTER WIDGETS -->
-        <div id="footer-widget-area" class="secondary" style="display:flex;">
-  <div id="footer-widget1">
-    <?php
+		<!-- BEGIN ADD FOOTER WIDGETS -->
+		<div id="footer-widget-area" class="secondary" style="display:flex;">
+		<div id="footer-widget1">
+			<?php
 if(is_active_sidebar('footer-widget-1')){
 dynamic_sidebar('footer-widget-1');
 }
 ?>
-  </div>
-  <div id="footer-widget2">
-    <?php
+	</div>
+	<div id="footer-widget2">
+		<?php
 if(is_active_sidebar('footer-widget-2')) {
-    dynamic_sidebar('footer-widget-2');
+	dynamic_sidebar('footer-widget-2');
 }
 ?>
-  </div>
-  <div id="footer-widget3">
-    <?php
+	</div>
+	<div id="footer-widget3">
+		<?php
 if(is_active_sidebar('footer-widget-3')){
 dynamic_sidebar('footer-widget-3');
 }
 ?>
-  </div>
+	</div>
 </div>
         <!-- END ADD FOOTER WIDGETS -->
         <!-- BEGIN EDIT ADD FOOTER Copyright -->
@@ -162,16 +162,16 @@ dynamic_sidebar('footer-widget-3');
 <script>
 	var mapInterface = new MapsLibV2();
 
-  function initMap() {
+	function initMap() {
 		mapInterface.initMap();
 	}
 	
 	function initSearch() {
-    $(document).ready(function() {
-      MapsLibV2.getData().then(function(d) {
-        mapInterface.initSearch(d);
-      });
-    });
+		$(document).ready(function() {
+			MapsLibV2.getData().then(function(d) {
+				mapInterface.initSearch(d);
+			});
+		});
 	}
 	
 	initSearch();
@@ -184,13 +184,13 @@ dynamic_sidebar('footer-widget-3');
 <!-- setup materialize stuff -->
 <script>
 $(document).ready(function() {
-    // setup the input forms
-    $("select").formSelect();
-    // enable autocomplete
-    $('input.autocomplete').autocomplete({
-        data: AUTOCOMPLETE_DATA,
-        minLength: 0
-    });
+	// setup the input forms
+	$("select").formSelect();
+	// enable autocomplete
+	$('input.autocomplete').autocomplete({
+		data: AUTOCOMPLETE_DATA,
+		minLength: 0
+	});
 });
 </script>
 <!-- END CUSTOMIZATION FOR SEARCH v2 -->
