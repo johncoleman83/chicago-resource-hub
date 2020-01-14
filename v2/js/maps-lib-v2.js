@@ -176,10 +176,22 @@ class MapsLibV2 {
    */
 
   initSearch(d) {
-    this.data = JSON.parse(atob(d));
+    this.data = JSON.parse(decodeURIComponent(escape(atob(d))));
     this.index = this.createSearchIndex(this.data);
     this.queriableIndex = this.index;
     this.setupSearch();
+  }
+
+  fixMaterializeMobileBug(elementID) {
+    $(window).on('load, resize', function mobileViewUpdate() {
+      var viewportWidth = $(window).width();
+      if (viewportWidth < 600) {
+        $(elementID).addClass("browser-default");
+      } else {
+        $(elementID).removeClass("browser-default");
+      }
+    });
+    $(window).trigger('resize');
   }
 
   createSearchIndex(data) {
@@ -386,6 +398,9 @@ class MapsLibV2 {
     this.searchOnClick($("#services-autocomplete-parent").children());
     this.searchOnClick($("#population-list").find("li"));
     this.searchOnClick($("#activities-list").find("li"));
+    this.fixMaterializeMobileBug("#population-select");
+    this.fixMaterializeMobileBug("#activities-select");
+    
     this.paginateOnClick();
     this.updateResultsWindow(0);
   };

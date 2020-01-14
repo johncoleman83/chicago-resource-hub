@@ -40,6 +40,9 @@ $ cd v2 && ../server-cors.py
 
 * encode locations js file
 ```
+// start server
+$ cd v2 && ../server-cors.py
+
 // convert json data to javascript object
 let r = $.getJSON("http://localhost:8000/data/locations.json", function(json) {
   return json;
@@ -50,10 +53,10 @@ let r = $.getJSON("http://localhost:8000/data/locations.json", function(json) {
 let stringData = JSON.stringify(r.responseJSON);
 
 // convert string to base65 encoding
-let encodedData = btoa(stringData)
+let encodedData = btoa(unescape(encodeURIComponent(stringData)))
 
 // convert back
-let decodedData = JSON.parse(atob(encodedData))
+let decodedData = JSON.parse(decodeURIComponent(escape(atob(encodedData))))
 ```
 
 ## Author

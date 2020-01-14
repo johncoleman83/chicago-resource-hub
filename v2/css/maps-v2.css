@@ -1,7 +1,6 @@
 /*!
  * Custom CSS for Chicago Resource Hub
- * Modified from Bootstrap v3.2.0 (http://getbootstrap.com)
- * Version: 1.4
+ * Version: 1.5
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
@@ -71,3 +70,23 @@
 label.large-label.col.s12.m12.l12.sx12 {
     font-size: 18px;
 }
+
+
+/* GOOGLE MAPS STYLE */
+
+@media screen and (max-width: 600px) {
+  /* maps location card wrapper for media screens*/
+      .gm-style .gm-style-iw-c {
+          max-width: 320px !important;
+          width: 320px !important;
+      }
+  
+      /* maps location card inside div */
+      .gm-style .gm-style-iw-d {
+          max-width: 100% !important;
+      }
+      
+      .select-wrapper input.select-dropdown {
+          display: none;
+      }
+  }
