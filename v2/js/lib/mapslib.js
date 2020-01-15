@@ -1,21 +1,32 @@
 class MapsLibV2 {
-  constructor() {
+  constructor(options) {
     // Search Setup
-    this.data = null;
-    this.index = null;
-    this.paginationQuery = null;
-    this.queriableIndex = null;
+    this.search = {
+      service: options.searchService,
+      data: null,
+      index: null,
+      queriableIndex: null,
+      customData: [],
+      populationFilter: null,
+      activityFilter: null
+    }
 
-    this.paginationMore = false;
-    this.repeatedSearchIsAllowed = false;
-
-    this.paginationIndex = 0;
-    this.customData = [];
+    // Pagination Setup
+    this.pagination = {
+      index: 0,
+      query: null,
+      more: false,
+      canRepeat: false
+    }
 
     // Maps Setup
-    this.map;
+    this.google = options.google || null;
+    this.map = null;
     this.displayedMarkersList = [];
     this.customBounds = null;
+
+    // UX setup
+    this.design = options.design || null;
   }
 
   // called to get datastore for client side
@@ -34,7 +45,7 @@ class MapsLibV2 {
    */
 
   initMap() {
-    this.map = new google.maps.Map(document.getElementById('map'), {
+    this.map = new this.google.Map(document.getElementById('map'), {
       zoom: DEFAULT_ZOOM,
       center: CHICAGO,
       mapTypeId: 'roadmap'
@@ -54,13 +65,13 @@ class MapsLibV2 {
   }
 
   createGoogleInfoWindowFor(l) {
-    return new google.maps.InfoWindow({
+    return new this.google.InfoWindow({
       content: this.formatOneLocation(l)
     });
   }
 
   createGoogleMarkerFor(l, placeCoordinates) {
-    return new google.maps.Marker({
+    return new this.google.Marker({
       position: placeCoordinates,
       map: this.map,
       title: l.name,
@@ -82,10 +93,10 @@ class MapsLibV2 {
       marker.addListener('click', () => {
         infowindow.open(this.map, marker);
       });
-      google.maps.event.addListener(this.map, "click", () => {
+      this.google.event.addListener(this.map, "click", () => {
         infowindow.close();
       });
-      google.maps.event.addListener(infowindow, 'domready', () => {
+      this.google.event.addListener(infowindow, 'domready', () => {
         $(".tabs").tabs();
       });
       this.displayedMarkersList.push(marker);
@@ -95,8 +106,8 @@ class MapsLibV2 {
   initMapSearchBox() {
     // Create the search box and link it to the UI element.
     let input = document.getElementById('pac-input');
-    let searchBox = new google.maps.places.SearchBox(input);
-    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    let searchBox = new this.google.places.SearchBox(input);
+    // map.controls[this.google.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
     this.map.addListener('bounds_changed', () => {
@@ -113,7 +124,7 @@ class MapsLibV2 {
       }
 
       // For each place, get the icon, name and location.
-      let bounds = new google.maps.LatLngBounds();
+      let bounds = new this.google.LatLngBounds();
 
       places.forEach((place) => {
         if (!place.geometry) {
@@ -136,7 +147,7 @@ class MapsLibV2 {
   }
 
   customBoundsDoesContain(l) {
-    let markerLatLng = new google.maps.LatLng({
+    let markerLatLng = new this.google.LatLng({
       lat: Number(l.latitude),
       lng: Number(l.longitude)
     });
@@ -145,25 +156,25 @@ class MapsLibV2 {
   }
 
   createNewIndexForCustomBounds() {
-    $.each(this.data, (i, location) => {
+    $.each(this.search.data, (i, location) => {
       if (this.customBoundsDoesContain(location)) {
-        this.customData.push(location);
+        this.search.customData.push(location);
       }
     })
-    this.queriableIndex = this.createSearchIndex(this.customData);
+    this.search.queriableIndex = this.createSearchIndex(this.search.customData);
   }
 
   resetMap() {
     this.clearOverlays();
     this.map.setZoom(11);
-    this.customData.length = 0;
+    this.search.customData.length = 0;
     this.customBounds = null;
-    this.queriableIndex = this.index;
-    this.repeatedSearchIsAllowed = true;
+    this.search.queriableIndex = this.search.index;
+    this.pagination.canRepeat = true;
     $('#pac-input').val("");
-    this.paginationIndex = 0;
-    this.paginationQuery = null;
-    this.paginationMore = false;
+    this.pagination.index = 0;
+    this.pagination.query = null;
+    this.pagination.more = false;
     $("#pagination-forward").addClass("disabled");
     $("#pagination-back").addClass("disabled");
     this.updateResultsWindow(0);
@@ -176,9 +187,9 @@ class MapsLibV2 {
    */
 
   initSearch(d) {
-    this.data = JSON.parse(decodeURIComponent(escape(atob(d))));
-    this.index = this.createSearchIndex(this.data);
-    this.queriableIndex = this.index;
+    this.search.data = JSON.parse(decodeURIComponent(escape(atob(d))));
+    this.search.index = this.createSearchIndex();
+    this.search.queriableIndex = this.search.index;
     this.setupSearch();
   }
 
@@ -194,8 +205,8 @@ class MapsLibV2 {
     $(window).trigger('resize');
   }
 
-  createSearchIndex(data) {
-    let tempIndex = new FlexSearch({
+  createSearchIndex() {
+    let tempIndex = new this.search.service({
       tokenize: "forward",
       doc: {
         id: "id",
@@ -206,30 +217,28 @@ class MapsLibV2 {
         ]
       }
     });
-    tempIndex.add(data);
+    tempIndex.add(this.search.data);
     return tempIndex;
   }
 
   queryDidChange(query) {
-    return this.paginationQuery.query !== query.query || this.paginationQuery.field.sort().join('') !== query.field.sort().join('');
+    return this.pagination.query.query !== query.query || this.pagination.query.field.sort().join('') !== query.field.sort().join('');
   }
 
   shouldDoNewSearch(query) {
-    if (!this.paginationQuery) {
+    if (!this.pagination.query) {
       return true;
     }
     if (!query) {
       return false;
     }
 
-    return this.queryDidChange(query) || this.repeatedSearchIsAllowed;
+    return this.queryDidChange(query) || this.pagination.canRepeat;
   }
 
   buildSearchQuery() {
     let nameSearchTerm = $("#organization-name-search").val().trim();
     let serviceSearchTerm = $("#autocomplete-input").val().trim();
-    let populationSearchText = $("#population-select").val().trim();
-    let activitiesSearchText = $("#activities-select").val().trim();
 
     let searchTerms = "";
     let fields = []
@@ -238,11 +247,11 @@ class MapsLibV2 {
       fields.push("name")
       fields.push("description")
     } else {
-      if (populationSearchText != "") {
-        serviceSearchTerm += " " + populationSearchText;
+      if (this.search.populationFilter != null) {
+        serviceSearchTerm += " " + this.search.populationFilter;
       }
-      if (activitiesSearchText != "") {
-        serviceSearchTerm += " " + activitiesSearchText;
+      if (this.search.activityFilter != null) {
+        serviceSearchTerm += " " + this.search.activityFilter;
       }
       if (serviceSearchTerm != "") {
         searchTerms += " " + serviceSearchTerm.trim();
@@ -265,17 +274,17 @@ class MapsLibV2 {
   }
 
   resetPagination() {
-    this.paginationIndex = 0;
-    this.paginationQuery = null;
-    this.paginationMore = true;
+    this.pagination.index = 0;
+    this.pagination.query = null;
+    this.pagination.more = true;
     $("#pagination-back").addClass("disabled");
   }
 
   paginationOffset() {
-    if (this.paginationIndex == 0) {
+    if (this.pagination.index == 0) {
       return true;
     }
-    let offset = this.paginationIndex * DEFAULT_SEARCH_LIMIT;
+    let offset = this.pagination.index * DEFAULT_SEARCH_LIMIT;
     return offset.toString();
   }
 
@@ -285,18 +294,29 @@ class MapsLibV2 {
    * 
    */
 
-  async searchCallback(locations) {
+  displayOnPageFor(locations) {
     if (locations.length <= 0) {
       return;
     }
     let formatedLocations = this.htmlFormatFor(locations);
-    $("#locations-listing-view").html(formatedLocations);
-    $(".tabs").tabs();
+    let locationsId = "#locations-listing-view";
+    $(locationsId).html(formatedLocations);
+
+    // setTimeout(function(){ $(".tabs").tabs() }, 1500);
+    // using setTimeout or below setInterval has problems and should be changed
+    // this is to ensure that html has fully loaded before adding listening events
+    // should really add something like this
+    let verifyLocationsHaveLoaded = setInterval(function() {
+      if ($(locationsId).children().length == locations.length) {
+        $(".tabs").tabs()
+        clearInterval(verifyLocationsHaveLoaded);
+      }
+    }, 300); // check every 300ms
   }
 
   doSearchWithPagination() {
-    let query = this.paginationQuery;
-    this.repeatedSearchIsAllowed = false;
+    let query = this.pagination.query;
+    this.pagination.canRepeat = false;
 
     if (!query) {
       return;
@@ -305,16 +325,16 @@ class MapsLibV2 {
     query.page = this.paginationOffset();
     query.limit = DEFAULT_SEARCH_LIMIT;
 
-    let result = this.queriableIndex.search(query.query, query);
+    let result = this.search.queriableIndex.search(query.query, query);
     let locations = result.result;
     let totalResults = locations.length;
     if (!result.next) {
-      this.paginationMore = false;
+      this.pagination.more = false;
       $("#pagination-forward").addClass("disabled");
     } else {
       $("#pagination-forward").removeClass("disabled");
     }
-    this.searchCallback(locations);
+    this.displayOnPageFor(locations);
     this.displayOnMapFor(locations);
     this.updateResultsWindow(totalResults);
   }
@@ -322,7 +342,7 @@ class MapsLibV2 {
   doSearch(query) {
     if (this.shouldDoNewSearch(query)) {
       this.resetPagination();
-      this.paginationQuery = query;
+      this.pagination.query = query;
       this.doSearchWithPagination();
     }
   }
@@ -365,13 +385,34 @@ class MapsLibV2 {
     });
   }
 
+  filterOnClick(filterId) {
+    let selectPopulation = new this.design.select.MDCSelect(document.querySelector("#population-filter"));
+    let selectRecreation = new this.design.select.MDCSelect(document.querySelector("#activity-filter"));
+    selectPopulation.listen('MDCSelect:change', () => {
+      if (selectPopulation.value != "") {
+        this.search.populationFilter = selectPopulation.value;
+      } else {
+        this.search.populationFilter = null;
+      }
+      this.doSearch(this.buildSearchQuery());
+    });
+    selectRecreation.listen('MDCSelect:change', () => {
+      if (selectRecreation.value != "") {
+        this.search.populationFilter = selectRecreation.value;
+      } else {
+        this.search.populationFilter = null;
+      }
+      this.doSearch(this.buildSearchQuery());
+    });
+  }
+
   paginateOnClick() {
     $("#pagination-back").click(() => {
-      if (this.paginationIndex > 0 && this.paginationQuery) {
-        this.paginationIndex -= 1;
-        this.paginationMore = true;
+      if (this.pagination.index > 0 && this.pagination.query) {
+        this.pagination.index -= 1;
+        this.pagination.more = true;
         this.doSearchWithPagination();
-        if (this.paginationIndex == 0) {
+        if (this.pagination.index == 0) {
           $("#pagination-back").addClass("disabled");
         }
         if ($("#pagination-forward").hasClass("disabled")) {
@@ -380,8 +421,8 @@ class MapsLibV2 {
       }
     });
     $("#pagination-forward").click(() => {
-      if (this.paginationMore && this.paginationQuery) {
-        this.paginationIndex += 1;
+      if (this.pagination.more && this.pagination.query) {
+        this.pagination.index += 1;
         this.doSearchWithPagination();
         if ($("#pagination-back").hasClass("disabled")) {
           $("#pagination-back").removeClass("disabled");
@@ -396,11 +437,9 @@ class MapsLibV2 {
 
     this.searchOnClick($("#search-button"));
     this.searchOnClick($("#services-autocomplete-parent").children());
-    this.searchOnClick($("#population-list").find("li"));
-    this.searchOnClick($("#activities-list").find("li"));
-    this.fixMaterializeMobileBug("#population-select");
-    this.fixMaterializeMobileBug("#activities-select");
-    
+
+    this.filterOnClick();
+
     this.paginateOnClick();
     this.updateResultsWindow(0);
   };
@@ -421,9 +460,9 @@ class MapsLibV2 {
     return result;
   }
 
-  htmlFormatForResultsWindow(totalResults, paginationMore) {
+  htmlFormatForResultsWindow(totalResults, more) {
     let moreMessage;
-    if (paginationMore) {
+    if (more) {
       moreMessage = 'Click to see more results.'
     } else if (totalResults >= 1) {
       moreMessage = 'End of results.'
@@ -484,17 +523,17 @@ class MapsLibV2 {
   }
 
   updateResultsWindow(totalResults) {
-    let formatted = this.htmlFormatForResultsWindow(totalResults, this.paginationMore);
+    let formatted = this.htmlFormatForResultsWindow(totalResults, this.pagination.more);
     $('#results-window').html(formatted);
   }
 
   htmlFormatFor(locations) {
     let formatedLocations = locations.map((l) => {
       return [
-        '<div class="col s12 m6 l6 xl6">',
+        '<div class="one-location-listing col s12 m6 l6 xl6">',
         this.formatOneLocation(l),
         '</div>'
-      ].join("")
+      ].join("");
     });
     return formatedLocations.join("")
   }

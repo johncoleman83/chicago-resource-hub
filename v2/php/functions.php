@@ -3,8 +3,9 @@ add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 function theme_enqueue_styles() {
 	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
     if ( is_page( '1292' ) || is_page( '51' ) || is_page( '115' ) ) {
-		wp_enqueue_style( 'google-materialize', 'https://fonts.googleapis.com/icon?family=Material+Icons' );
+		wp_enqueue_style( 'google-material', 'https://fonts.googleapis.com/icon?family=Material+Icons' );
 		wp_enqueue_style( 'materialize', get_stylesheet_directory_uri() . '/css/deps/materialize.css' );
+		wp_enqueue_style( 'material-design', get_stylesheet_directory_uri() . '/css/deps/material-components-web.min.css' );
     }
 
 	if ( is_page( '1292' ) ) {

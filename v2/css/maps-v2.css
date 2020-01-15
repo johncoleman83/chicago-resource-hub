@@ -4,34 +4,9 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
- @font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url(../fonts/glyphicons-halflings-regular.eot);
-  src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'), url(../fonts/glyphicons-halflings-regular.woff) format('woff'), url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'), url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
-}
-
-.glyphicon {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.glyphicon-search:before {
-  content: "\e003";
-}
-
-.glyphicon-remove:before {
-  content: "\e014";
-}
-
-.glyphicon-repeat:before {
-  content: "\e030";
+/* MATERIAL DESIGN UPDATES */
+.mdc-full-width {
+  width: 100%;
 }
 
 #map {
@@ -75,18 +50,18 @@ label.large-label.col.s12.m12.l12.sx12 {
 /* GOOGLE MAPS STYLE */
 
 @media screen and (max-width: 600px) {
-  /* maps location card wrapper for media screens*/
-      .gm-style .gm-style-iw-c {
-          max-width: 320px !important;
-          width: 320px !important;
-      }
-  
-      /* maps location card inside div */
-      .gm-style .gm-style-iw-d {
-          max-width: 100% !important;
-      }
-      
-      .select-wrapper input.select-dropdown {
-          display: none;
-      }
+/* maps location card wrapper for media screens*/
+  .gm-style .gm-style-iw-c {
+    max-width: 320px !important;
+    width: 320px !important;
   }
+
+  /* maps location card inside div */
+  .gm-style .gm-style-iw-d {
+    max-width: 100% !important;
+  }
+  
+  .select-wrapper input.select-dropdown {
+    display: none;
+  }
+}

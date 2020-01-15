@@ -152,47 +152,8 @@ dynamic_sidebar('footer-widget-3');
 <?php wp_footer(); ?>
 
 <!--  BEGIN CUSOMIZATION  FOR SEARCH v2 -->
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/deps/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/deps/materialize.min.js"></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/deps/flexsearch.min.js"></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/constants.js"></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/maps-lib-v2.js"></script>
+<script data-main="<?php echo get_stylesheet_directory_uri(); ?>/js/app.js" src="<?php echo get_stylesheet_directory_uri(); ?>/js/require.js"></script>
 
-<!-- the main maps lib setup -->
-<script>
-	var mapInterface = new MapsLibV2();
-
-	function initMap() {
-		mapInterface.initMap();
-	}
-	
-	function initSearch() {
-		$(document).ready(function() {
-			MapsLibV2.getData().then(function(d) {
-				mapInterface.initSearch(d);
-			});
-		});
-	}
-	
-	initSearch();
-</script>
-
-<script async="false" type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=<HIDDEN>&region=US&libraries=places&callback=initMap">
-</script>
-
-<!-- setup materialize stuff -->
-<script>
-$(document).ready(function() {
-	// setup the input forms
-	$("select").formSelect();
-	// enable autocomplete
-	$('input.autocomplete').autocomplete({
-		data: AUTOCOMPLETE_DATA,
-		minLength: 0
-	});
-});
-</script>
 <!-- END CUSTOMIZATION FOR SEARCH v2 -->
 
 </body>

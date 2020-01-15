@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <link rel="stylesheet" type="text/css" href="css/deps/materialize.css">
+    <link rel="stylesheet" type="text/css" href="css/deps/material-components-web.min.css">
     <link rel="stylesheet" type="text/css" href="css/maps-v2.css">
   </head>
 
@@ -14,79 +15,93 @@
     <div class="row" id="map-container">
       <div id="search-tools" class="col s12 m4 l4 xl4">
         <h4 style="text-align:center; margin:0 0 20px 0;">What would you like to search?</h4>
-        <label class="large-label col s12 m12 l12 sx12" for="autocomplete-input">Services</label>
         <div class="row">
+          <label class="large-label col s12 m12 l12 sx12" for="autocomplete-input">Services</label>
           <div class="input-field col s12 m12 l12 xl12" id="services-autocomplete-parent">
             <input id="autocomplete-input" class="autocomplete" placeholder="enter keyword to search organizations" type="text" autocomplete="vxzyvxycwqwwqcxz">
           </div>
-        </div>
-        <label class="large-label col s12 m12 l12 sx12" for="population-select">Population</label>
-        <div class="row">
-          <div class="input-field col s12 m12 l12 xl12" id="population-list">
-            <select id="population-select">
-              <option value=""> ** no specified population **</option>
-              <option value="Asian">Asian</option>
-              <option value="Child">Child Specific (for more search "youth")</option>
-              <option value="Criminal Justice System">Criminal Justice System Involved (X-felons)</option>
-              <option value="DCFS">DCFS involved/ Wards/ Foster Care</option>
-              <option value="Disability">Disability: Serves those w/ Disabilities</option>
-              <option value="Gang">Gang Involved/ Affiliated</option>
-              <option value="Homeless">Homeless (for more search "shelter")</option>
-              <option value="Immigrant">Immigrant or Refugee</option>
-              <option value="LGBTQ">LGBTQ+ Support</option>
-              <option value="Parent">Parents</option>
-              <option value="Pregnant">Pregnant Women</option>
-              <option value="Senior">Senior/ Elderly</option>
-              <option value="Spanish">Spanish Speaking</option>
-              <option value="Veterans">Veterans</option>
-              <option value="Women">Women Specific</option>
-              <option value="Youth">Youth (or Child)</option>
-            </select>
+          <label class="large-label col s12 m12 l12 sx12" for="population-filter">Population</label>
+          <div id="population-filter" class="col s12 m12 l12 sx12 mdc-select mdc-full-width">
+            <div class="mdc-select__anchor mdc-full-width">
+              <i class="mdc-select__dropdown-icon"></i>
+              <div class="mdc-select__selected-text"></div>
+              <span class="mdc-floating-label">Filter for a population</span>
+              <div class="mdc-line-ripple"></div>
+            </div>
+          
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-full-width">
+              <ul class="mdc-list">
+                <li class="mdc-list-item mdc-list-item--selected" data-value="" aria-selected="true"></li>
+                <li class="mdc-list-item" data-value="Asian">Asian</li>
+                <li class="mdc-list-item" data-value="Child">Child Specific (for more search "youth")</li>
+                <li class="mdc-list-item" data-value="Criminal Justice System">Criminal Justice System Involved (X-felons)</li>
+                <li class="mdc-list-item" data-value="DCFS">DCFS involved/ Wards/ Foster Care</li>
+                <li class="mdc-list-item" data-value="Disability">Disability: Serves those w/ Disabilities</li>
+                <li class="mdc-list-item" data-value="Gang">Gang Involved/ Affiliated</li>
+                <li class="mdc-list-item" data-value="Homeless">Homeless (for more search "shelter")</li>
+                <li class="mdc-list-item" data-value="Immigrant">Immigrant or Refugee</li>
+                <li class="mdc-list-item" data-value="LGBTQ">LGBTQ+ Support</li>
+                <li class="mdc-list-item" data-value="Parent">Parents</li>
+                <li class="mdc-list-item" data-value="Pregnant">Pregnant Women</li>
+                <li class="mdc-list-item" data-value="Senior">Senior/ Elderly</li>
+                <li class="mdc-list-item" data-value="Spanish">Spanish Speaking</li>
+                <li class="mdc-list-item" data-value="Veterans">Veterans</li>
+                <li class="mdc-list-item" data-value="Women">Women Specific</li>
+                <li class="mdc-list-item" data-value="Youth">Youth (or Child)</li>
+              </ul>
+            </div>
+          </div>
+          <label class="large-label col s12 m12 l12 sx12" for="activity-filter">Recreation, Sport, Art, Activity</label>
+          <div id="activity-filter" class="col s12 m12 l12 sx12 mdc-select mdc-full-width">
+            <div class="mdc-select__anchor mdc-full-width">
+              <i class="mdc-select__dropdown-icon"></i>
+              <div class="mdc-select__selected-text"></div>
+              <span class="mdc-floating-label">Filter for an activity</span>
+              <div class="mdc-line-ripple"></div>
+            </div>
+          
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-full-width">
+              <ul class="mdc-list">
+                <li class="mdc-list-item mdc-list-item--selected" data-value="" aria-selected="true"></li>
+                <li class="mdc-list-item" data-value="Art">Art</li>
+                <li class="mdc-list-item" data-value="Athletics">Athletics</li>
+                <li class="mdc-list-item" data-value="Computer">Computer: Internet, Tech Center, Coding</li>
+                <li class="mdc-list-item" data-value="Design">Design: Drawing, Painting, Graphics</li>
+                <li class="mdc-list-item" data-value="Drama">Drama: Theater, Dance</li>
+                <li class="mdc-list-item" data-value="Media">Media: Music, Video</li>
+                <li class="mdc-list-item" data-value="Baseball">Field: Baseball</li>
+                <li class="mdc-list-item" data-value="Basketball">Field: Basketball Court (Outdoor)</li>
+                <li class="mdc-list-item" data-value="Track">Field: Track</li>
+                <li class="mdc-list-item" data-value="Football / Soccer">Field: Football / Soccer</li>
+                <li class="mdc-list-item" data-value="Fitness Center">Fitness Center</li>
+                <li class="mdc-list-item" data-value="Gym">Gymnasium</li>
+                <li class="mdc-list-item" data-value="Lifeguard">Lifeguard Training</li>
+                <li class="mdc-list-item" data-value="Park">Parks &amp; Park Districts</li>
+                <li class="mdc-list-item" data-value="Pool">Pool</li>
+                <li class="mdc-list-item" data-value="Playground">Playground</li>
+                <li class="mdc-list-item" data-value="Recreation">Recreation</li>
+                <li class="mdc-list-item" data-value="Urban Farm">Urban Farm / Garden</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <label for="activities-select" class="large-label col s12 m12 l12 sx12">Recreation, Sport, Art, Activity</label>
         <div class="row">
-          <div class="input-field col s12 m12 l12 xl12" id="activities-list">
-            <select id="activities-select">
-              <option value=""> ** no specified activity **</option>
-              <option value="Art">Art</option>
-              <option value="Athletics">Athletics</option>
-              <option value="Computer">Computer: Internet, Tech Center, Coding</option>
-              <option value="Design">Design: Drawing, Painting, Graphics</option>
-              <option value="Drama">Drama: Theater, Dance</option>
-              <option value="Media">Media: Music, Video</option>
-              <option value="Baseball">Field: Baseball</option>
-              <option value="Basketball">Field: Basketball Court (Outdoor)</option>
-              <option value="Track">Field: Track</option>
-              <option value="Football / Soccer">Field: Football / Soccer</option>
-              <option value="Fitness Center">Fitness Center</option>
-              <option value="Gym">Gymnasium</option>
-              <option value="Lifeguard">Lifeguard Training</option>
-              <option value="Park">Parks &amp; Park Districts</option>
-              <option value="Pool">Pool</option>
-              <option value="Playground">Playground</option>
-              <option value="Recreation">Recreation</option>
-              <option value="Urban Farm">Urban Farm / Garden</option>
-            </select>
-          </div>
-        </div>
-        <label class="large-label col s12 m12 l12 sx12" for="organization-name-search">Organization Name</label>
-        <div class="row">
+          <label class="large-label col s12 m12 l12 sx12" for="organization-name-search">Organization Name</label>
           <div class="input-field col s12 m12 l12 xl12">
             <input id="organization-name-search" placeholder="enter keyword to search organizations" type="text">
           </div>
-        </div>
-        <label class="large-label col s12 m12 l12 sx12" for="localize-search-box">Neighborhood or Address</label>
-        <div class="row">
+          <label class="large-label col s12 m12 l12 sx12" for="localize-search-box">Neighborhood or Address</label>
           <div class="input-field col s12 m12 l12 xl12">
             <input id="pac-input" placeholder="center your search to a specific location" type="text">
           </div>
         </div>
         <div class="row" style="text-align: center;">
           <div class="col s6 m6 l6 xl6">
-            <a class="btn btn-large waves-effect waves-light disabled" id="search-button"><i class="glyphicon glyphicon-search"></i> Search</a></div>
+            <a class="btn btn-large waves-effect waves-light" id="search-button"><i class="material-icons">search</i> Search</a>
+          </div>
           <div class="col s6 m6 l6 xl6">
-            <a class="btn btn-large waves-effect waves-light disabled" id="search-reset"><i class="glyphicon glyphicon-repeat"></i> Reset</a></div>
+            <a class="btn btn-large waves-effect waves-light" id="search-reset"><i class="material-icons">refresh</i> Reset</a>
+          </div>
         </div>
         <div class="row" style="text-align: center;">
           <div class="col s12 m12 l12 xl12" id="results-window">
@@ -153,55 +168,17 @@
       <div id="maps-wrapper" class="col s12 m8 l8 xl8">
         <div id="map"></div>
       </div>
-      <div id="locations-listing-view" class="row"></div>
     </div>
+    <div id="locations-listing-view" class="row"></div>
 
     <!-- END CODE THAT GOES TO WORDPRESS PAGE BEGIN CUSTOM HTML FOR LOCAL -->
 
     <footer>
     </footer>
 
-    <!-- ORDER MATTERS FOR THE IMPORTING OF JS FILES -->
-    <script type="text/javascript" src="js/deps/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="js/deps/materialize.min.js"></script>
-    <script type="text/javascript" src="js/deps/flexsearch.min.js"></script>
-    <script type="text/javascript" src="js/constants.js"></script>
-    <script type="text/javascript" src="js/maps-lib-v2.js"></script>
+    <script data-main="js/app.js" src="js/require.js"></script>
 
     <!-- the main maps lib setup -->
-    <script>
-      var mapInterface = new MapsLibV2();
-
-      function initMap() {
-        mapInterface.initMap();
-      }
-
-      function initSearch() {
-        $(document).ready(function() {
-          MapsLibV2.getData().then(function(d) {
-            mapInterface.initSearch(d);
-          });
-        });
-      }
-
-      initSearch();
-
-    </script>
-    <!--script async="false" type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=<HIDDEN>&callback=initMap">
-        </script-->
-    <script>
-      $(document).ready(function() {
-        // setup the input forms
-        $("select").formSelect();
-        // enable autocomplete
-        $('input.autocomplete').autocomplete({
-          data: AUTOCOMPLETE_DATA,
-          minLength: 0
-        });
-      });
-
-    </script>
   </body>
 
 </html>
