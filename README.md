@@ -71,4 +71,4 @@ David John Coleman II, [davidjohncoleman.com](https://www.davidjohncoleman.com/)
 
 ## License
 
-Public Domain, no copyright protection
+MIT License
