@@ -12,9 +12,9 @@ This child theme can be plugged into **WordPress**: https://wordpress.org/ Howev
 all that is needed are some of the JS, CSS & HTML files.  The PHP is just some
 of the design stuff.
 
-* **Materialize**
-
-The ui uses materialize theme based on material design: https://materializecss.com/
+* **Material Design**
+  * The ui uses materialize theme based on material design: https://materializecss.com/
+  * Also google's material.io design for web: https://github.com/material-components/material-components-web/
 
 * **FlexSearch**
 
@@ -39,6 +39,12 @@ $ cd v2 && ../server-cors.py
 ```
 
 * encode locations js file
+
+This is a little bit of security by obscurity.  It does nothing to protect the data
+but simply creates a little bit more challenge for bots trying to scrape
+contact information.  We don't want bots getting all the list of phone numbers
+to start spamming these locations.
+
 ```
 // start server
 $ cd v2 && ../server-cors.py
