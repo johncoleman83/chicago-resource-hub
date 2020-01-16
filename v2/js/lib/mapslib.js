@@ -20,11 +20,12 @@ class MapsLibV2 {
     }
 
     // Maps Setup
-    this.google = options.google || null;
-    this.map = null;
-    this.displayedMarkersList = [];
-    this.customBounds = null;
-
+    this.maps = {
+      google: options.google || null,
+      map: null,
+      displayedMarkersList: [],
+      customBounds: null
+    }
     // UX setup
     this.design = options.design || null;
   }
@@ -45,35 +46,35 @@ class MapsLibV2 {
    */
 
   initMap() {
-    this.map = new this.google.Map(document.getElementById('map'), {
+    this.maps.map = new this.maps.google.Map(document.getElementById('map'), {
       zoom: DEFAULT_ZOOM,
       center: CHICAGO,
       mapTypeId: 'roadmap'
     });
     $("#search-reset").click(() => {
-      this.resetMap();
+      this.resetAllTheThings();
     });
     this.initMapSearchBox();
   }
 
   clearOverlays() {
-    for (var i = 0; i < this.displayedMarkersList.length; i++) {
-      this.displayedMarkersList[i].setMap(null);
-      this.displayedMarkersList[i] = null;
+    for (var i = 0; i < this.maps.displayedMarkersList.length; i++) {
+      this.maps.displayedMarkersList[i].setMap(null);
+      this.maps.displayedMarkersList[i] = null;
     }
-    this.displayedMarkersList.length = 0;
+    this.maps.displayedMarkersList.length = 0;
   }
 
   createGoogleInfoWindowFor(l) {
-    return new this.google.InfoWindow({
+    return new this.maps.google.InfoWindow({
       content: this.formatOneLocation(l)
     });
   }
 
   createGoogleMarkerFor(l, placeCoordinates) {
-    return new this.google.Marker({
+    return new this.maps.google.Marker({
       position: placeCoordinates,
-      map: this.map,
+      map: this.maps.map,
       title: l.name,
       visible: true,
       icon: l.icon
@@ -91,27 +92,27 @@ class MapsLibV2 {
       let marker = this.createGoogleMarkerFor(l, placeCoordinates);
       let infowindow = this.createGoogleInfoWindowFor(l);
       marker.addListener('click', () => {
-        infowindow.open(this.map, marker);
+        infowindow.open(this.maps.map, marker);
       });
-      this.google.event.addListener(this.map, "click", () => {
+      this.maps.google.event.addListener(this.maps.map, "click", () => {
         infowindow.close();
       });
-      this.google.event.addListener(infowindow, 'domready', () => {
+      this.maps.google.event.addListener(infowindow, 'domready', () => {
         $(".tabs").tabs();
       });
-      this.displayedMarkersList.push(marker);
+      this.maps.displayedMarkersList.push(marker);
     });
   }
 
   initMapSearchBox() {
     // Create the search box and link it to the UI element.
     let input = document.getElementById('pac-input');
-    let searchBox = new this.google.places.SearchBox(input);
-    // map.controls[this.google.ControlPosition.TOP_LEFT].push(input);
+    let searchBox = new this.maps.google.places.SearchBox(input);
+    // map.controls[this.maps.google.ControlPosition.TOP_LEFT].push(input);
 
     // Bias the SearchBox results towards current map's viewport.
-    this.map.addListener('bounds_changed', () => {
-      searchBox.setBounds(this.map.getBounds());
+    this.maps.map.addListener('bounds_changed', () => {
+      searchBox.setBounds(this.maps.map.getBounds());
     });
 
     // Listen for the event fired when the user selects a prediction and retrieve
@@ -124,7 +125,7 @@ class MapsLibV2 {
       }
 
       // For each place, get the icon, name and location.
-      let bounds = new this.google.LatLngBounds();
+      let bounds = new this.maps.google.LatLngBounds();
 
       places.forEach((place) => {
         if (!place.geometry) {
@@ -138,21 +139,21 @@ class MapsLibV2 {
           bounds.extend(place.geometry.location);
         }
       });
-      this.map.fitBounds(bounds);
-      this.map.setZoom(14);
-      this.customBounds = bounds;
+      this.maps.map.fitBounds(bounds);
+      this.maps.map.setZoom(14);
+      this.maps.customBounds = bounds;
 
       this.createNewIndexForCustomBounds();
     });
   }
 
   customBoundsDoesContain(l) {
-    let markerLatLng = new this.google.LatLng({
+    let markerLatLng = new this.maps.google.LatLng({
       lat: Number(l.latitude),
       lng: Number(l.longitude)
     });
 
-    return this.customBounds.contains(markerLatLng);
+    return this.maps.customBounds.contains(markerLatLng);
   }
 
   createNewIndexForCustomBounds() {
@@ -164,20 +165,36 @@ class MapsLibV2 {
     this.search.queriableIndex = this.createSearchIndex(this.search.customData);
   }
 
-  resetMap() {
+  resetAllTheThings() {
+    // clear map
     this.clearOverlays();
-    this.map.setZoom(11);
+    this.maps.map.setZoom(11);
+    this.maps.customBounds = null;
+
+    // search results clear
     this.search.customData.length = 0;
-    this.customBounds = null;
+    this.updateResultsWindow(0);
     this.search.queriableIndex = this.search.index;
-    this.pagination.canRepeat = true;
+
+    // clear input boxes
+    $('#autocomplete-input').val("")
+    $('.mdc-select__selected-text').html("")
+    $("#organization-name-search").val("")
+
+    // clear location bounds input
     $('#pac-input').val("");
+
+    // clear stored filters
+    this.search.populationFilter = null;
+    this.search.activityFilter = null;
+
+    // reset pagination
+    this.pagination.canRepeat = true;
     this.pagination.index = 0;
     this.pagination.query = null;
     this.pagination.more = false;
     $("#pagination-forward").addClass("disabled");
     $("#pagination-back").addClass("disabled");
-    this.updateResultsWindow(0);
   }
 
   /**
@@ -205,7 +222,7 @@ class MapsLibV2 {
     $(window).trigger('resize');
   }
 
-  createSearchIndex() {
+  createSearchIndex(data = null) {
     let tempIndex = new this.search.service({
       tokenize: "forward",
       doc: {
@@ -217,7 +234,7 @@ class MapsLibV2 {
         ]
       }
     });
-    tempIndex.add(this.search.data);
+    tempIndex.add(data || this.search.data);
     return tempIndex;
   }
 
@@ -306,7 +323,12 @@ class MapsLibV2 {
     // using setTimeout or below setInterval has problems and should be changed
     // this is to ensure that html has fully loaded before adding listening events
     // should really add something like this
+    let count = 0;
     let verifyLocationsHaveLoaded = setInterval(function() {
+      if (count >= 30) {
+        clearInterval(verifyLocationsHaveLoaded);
+      }
+      count += 1;
       if ($(locationsId).children().length == locations.length) {
         $(".tabs").tabs()
         clearInterval(verifyLocationsHaveLoaded);
