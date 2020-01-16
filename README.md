@@ -6,6 +6,10 @@ https://www.chicagoresourcehub.com/
 
 ## Dependencies
 
+* **JQuery**
+
+This is for the most part a vanilla JS application, that uses JQuery with material design integrations
+
 * **WordPress**
 
 This child theme can be plugged into **WordPress**: https://wordpress.org/ However,

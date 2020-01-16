@@ -53,7 +53,7 @@
 		<div id="search-full">
 			<div class="search-container">
 			<!-- EDITED THIS SEARCH FORM STATEMENT <p> section -->
-				<p>Use this tool to search the website.  To search organizations by <em>service type and neighborhood</em>, try using the <a href="http://www.chicagoresourcehub.com/" style="color: #3aaed4;"><strong>Map Tool</strong></a> and searching the Database on page "<a href="http://www.chicagoresourcehub.com/" style="color: #3aaed4;"><strong>Get Data</strong></a>"</p>
+				<p>Use this tool to search the website.  To search organizations by <em>service type and neighborhood</em>, try using the <a href="https://www.chicagoresourcehub.com/" style="color: #3aaed4;"><strong>Map Tool</strong></a> and searching the Database on page "<a href="https://www.chicagoresourcehub.com/" style="color: #3aaed4;"><strong>Get Data</strong></a>"</p>
 				<form method="get" id="search-form" action="<?php echo esc_url(home_url( '/' )); ?>">
 					<label>
 						<span class="screen-reader-text"><?php esc_html_e( 'Search for:', 'fortunato' ); ?></span>
@@ -92,7 +92,7 @@
 		</div>
 		<div class="theNavigationBar">
 			<nav id="site-navigation" class="main-navigation" role="navigation">
-                <img src="http://www.chicagoresourcehub.com/wp-content/uploads/2016/10/peacehub-logo-flat-transparent-back.png" class="header-image" /> <!-- EDIT ADD IMAGE -->
+                <img src="https://www.chicagoresourcehub.com/wp-content/uploads/2016/10/peacehub-logo-flat-transparent-back.png" class="header-image" /> <!-- EDIT ADD IMAGE -->
 <!-- Removed this line: <?php esc_html_e( 'Main Menu', 'fortunato' ); ?> -->
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i></button>
 				<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu' ) ); ?>

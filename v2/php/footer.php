@@ -39,7 +39,7 @@ dynamic_sidebar('footer-widget-3');
         <!-- END ADD FOOTER WIDGETS -->
         <!-- BEGIN EDIT ADD FOOTER Copyright -->
 <p id="custom-footer-copyright" style="text-align: center;">
-	<a href="http://www.chicagoresourcehub.com/terms-of-use">Terms of Use & Policies</a>
+	<a href="https://www.chicagoresourcehub.com/terms-of-use">Terms of Use & Policies</a>
 	· developed by: <a href="http://www.davidjohncoleman.com" target="_blank">davidjohncoleman.com</a>
 </p>
         <!-- END EDIT ADD FOOTER Copyright -->
