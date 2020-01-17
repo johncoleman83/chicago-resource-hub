@@ -402,35 +402,18 @@ modified in the Theme Fortunato style.css. The changes were to:
    margin-right: 2px;
    margin-top: 15px;
    margin-bottom: 0px;
+     display: flex;
+     flex-direction: row;
  }
  
- #footer-widget1 .widget {
-   margin: 0 0 0 0;
- }
  
- #footer-widget1 .widget p {
-   margin: 0 0 0 0;
+ #footer-widget1 aside.widget {
+     margin: 0 13%;
  }
  
  #sow-editor-14 .spaceLeftRight {
    margin: 0 10px;
    font-size: 30px;
- }
- 
- #footer-widget2 {
-   width: 100%;
- }
- 
- #footer-widget2 .widget {
-   margin: 0 0 0 0;
- }
- 
- #footer-widget3 {
-   width: 100%;
- }
- 
- #footer-widget3 .widget {
-   margin: 0 0 0 0;
  }
  
  /* --------------------------------------------------------------
@@ -793,6 +776,20 @@ modified in the Theme Fortunato style.css. The changes were to:
    
    .openSidebar span {
      background: #2b2b2b;
+   }
+
+   #footer-widget1 {
+     width: 100%;
+     margin-left: 2px;
+     margin-right: 2px;
+     margin-top: 15px;
+     margin-bottom: 0px;
+     display: flex;
+     flex-direction: column;
+   }
+
+   #footer-widget1 aside.widget {
+     margin: 0 0 0 0;
    }
  }
  

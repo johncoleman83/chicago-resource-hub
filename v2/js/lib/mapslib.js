@@ -313,11 +313,13 @@ class MapsLibV2 {
    */
 
   displayOnPageFor(locations) {
+    let locationsId = "#locations-listing-view";
+
     if (locations.length <= 0) {
+      $(locationsId).html("");
       return;
     }
     let formatedLocations = this.htmlFormatForAllLocations(locations);
-    let locationsId = "#locations-listing-view";
     $(locationsId).html(formatedLocations);
 
     // setTimeout(function(){ $(".tabs").tabs() }, 1500);

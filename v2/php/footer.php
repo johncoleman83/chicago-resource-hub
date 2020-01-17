@@ -21,20 +21,6 @@ dynamic_sidebar('footer-widget-1');
 }
 ?>
   </div>
-  <div id="footer-widget2">
-    <?php
-if(is_active_sidebar('footer-widget-2')){
-dynamic_sidebar('footer-widget-2');
-}
-?>
-  </div>
-  <div id="footer-widget3">
-    <?php
-if(is_active_sidebar('footer-widget-3')){
-dynamic_sidebar('footer-widget-3');
-}
-?>
-  </div>
 </div>
         <!-- END ADD FOOTER WIDGETS -->
         <!-- BEGIN EDIT ADD FOOTER Copyright -->
