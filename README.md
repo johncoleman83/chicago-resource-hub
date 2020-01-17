@@ -8,7 +8,11 @@ https://www.chicagoresourcehub.com/
 
 * **JQuery**
 
-This is for the most part a vanilla JS application, that uses JQuery with material design integrations
+This is a vanilla JS application, using JQuery: https://api.jquery.com/
+
+* **requireJS**
+
+Packages are managed with `require.js`: https://requirejs.org/
 
 * **WordPress**
 
@@ -24,6 +28,20 @@ of the design stuff.
 
 The Data Store of locations is queried using FlexSearch: https://github.com/nextapps-de/flexsearch
 
+* **Google Maps API (with Places configured)**
+
+* You need to have a Google Cloud Platform Account along with a Project that has a Google Maps API Key
+
+If you don't already have an account, then you will need to start a Google Cloud Platform Account:
+  * https://cloud.google.com/maps-platform/places/
+
+**$200 free monthly usage**
+> For most of our users, the $200 monthly credit is enough to support their needs.
+> You can also set daily quotas to protect against unexpected increases.
+
+Instructions on actually aquiring your API key are here:
+  * https://developers.google.com/places/web-service/get-api-key
+
 ## About
 
 ### V1
@@ -36,6 +54,34 @@ Current Version of Map Search Tool and Google Maps API.
 This uses an  in-memory data store, FlexSearch Search API, & Google Maps API 
 
 ## Usage
+
+* The DataStore location URL should use Local data if you are running locally to develop.
+This is important to avoid cross-origin browser errors.
+
+from `js/lib/constants.js`:
+```
+const DATA_URL = LOCAL_DATA;
+```
+
+* If you need the map to function ensure you've inserted a correct Google Maps API Key.
+You also need to set the authorizations for your Google API Key in the Google Cloud Command
+Console.  There you will find a setting to restrict the use of the API key.  In order to
+test locally, you'll need to set restrictions to **None**.
+  * Visit: `https://console.cloud.google.com/apis/credentials?authuser=1&project=<YOUR_PROJECT_NAME>`
+  * Click on **"Credentials"** in the Google Cloud Platform Project Settings
+  * Click on **"Application restrictions"**
+  * Set your restrictions according to your needs
+
+* The application should have your API KEY configured.
+
+This app uses `require.js`, so in `js/app.js` change the API Key
+```
+paths: {
+  shared: 'shared',
+  jquery: 'jquery-3.4.1',
+  google: '//maps.googleapis.com/maps/api/js?key=<HIDDEN>&region=US&libraries=places'
+},
+```
 
 * Start server and begin!
 ```
