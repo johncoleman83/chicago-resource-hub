@@ -6,41 +6,42 @@ https://www.chicagoresourcehub.com/
 
 ## Dependencies
 
-* **JQuery**
+### JQuery
 
 This is a vanilla JS application, using JQuery: https://api.jquery.com/
 
-* **requireJS**
+### requireJS
 
 Packages are managed with `require.js`: https://requirejs.org/
 
-* **WordPress**
+### WordPress
 
 This child theme can be plugged into **WordPress**: https://wordpress.org/ However,
 all that is needed are some of the JS, CSS & HTML files.  The PHP is just some
 of the design stuff.
 
-* **Material Design**
+### Material Design
   * The ui uses materialize theme based on material design: https://materializecss.com/
   * Also google's material.io design for web: https://github.com/material-components/material-components-web/
 
-* **FlexSearch**
+### FlexSearch
 
 The Data Store of locations is queried using FlexSearch: https://github.com/nextapps-de/flexsearch
 
-* **Google Maps API (with Places configured)**
+### Google Maps API (with Places configured)
 
 * You need to have a Google Cloud Platform Account along with a Project that has a Google Maps API Key
 
 If you don't already have an account, then you will need to start a Google Cloud Platform Account:
-  * https://cloud.google.com/maps-platform/places/
+
+* https://cloud.google.com/maps-platform/places/
 
 **$200 free monthly usage**
 > For most of our users, the $200 monthly credit is enough to support their needs.
 > You can also set daily quotas to protect against unexpected increases.
 
 Instructions on actually aquiring your API key are here:
-  * https://developers.google.com/places/web-service/get-api-key
+* https://developers.google.com/places/web-service/get-api-key
 
 ## About
 
