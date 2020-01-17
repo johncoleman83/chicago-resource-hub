@@ -7,6 +7,16 @@ const LOCAL_DATA = "http://localhost:8000/data/locations.txt";
 const PROD_DATA = "https://www.chicagoresourcehub.com/wp-content/themes/fortunato-child/data/locations.txt";
 const DATA_URL = LOCAL_DATA;
 
+const GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com/search?q=";
+const MAP_MARKERS = {
+  "standard": "https://www.chicagoresourcehub.com/wp-content/uploads/2020/01/drop-pin.png",
+  "peace_hub": "https://www.chicagoresourcehub.com/wp-content/uploads/2019/11/flag.png",
+  "ucan": "https://www.chicagoresourcehub.com/wp-content/uploads/2019/11/UCAN-logo-transparant-64x64.png",
+  "large_organization": "https://www.chicagoresourcehub.com/wp-content/uploads/2019/11/icon57.png",
+  "police_department": "https://www.chicagoresourcehub.com/wp-content/uploads/2019/11/police.png",
+  "food_provider": "https://www.chicagoresourcehub.com/wp-content/uploads/2019/11/groceries-32x32.png"
+};
+
 const AUTOCOMPLETE_DATA = {
   "Various": null,
   "Advocacy": null,

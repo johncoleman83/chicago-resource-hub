@@ -14,7 +14,7 @@ class MapsLibV2 {
     // Pagination Setup
     this.pagination = {
       index: 0,
-      query: null,
+      queryObject: null,
       more: false,
       canRepeat: false
     }
@@ -77,7 +77,7 @@ class MapsLibV2 {
       map: this.maps.map,
       title: l.name,
       visible: true,
-      icon: l.icon
+      icon: MAP_MARKERS[l.icon]
     });
   }
 
@@ -171,10 +171,11 @@ class MapsLibV2 {
     this.maps.map.setZoom(11);
     this.maps.customBounds = null;
 
-    // search results clear
+    // clear search results
     this.search.customData.length = 0;
     this.updateResultsWindow(0);
     this.search.queriableIndex = this.search.index;
+    $("#locations-listing-view").html("");
 
     // clear input boxes
     $('#autocomplete-input').val("")
@@ -191,7 +192,7 @@ class MapsLibV2 {
     // reset pagination
     this.pagination.canRepeat = true;
     this.pagination.index = 0;
-    this.pagination.query = null;
+    this.pagination.queryObject = null;
     this.pagination.more = false;
     $("#pagination-forward").addClass("disabled");
     $("#pagination-back").addClass("disabled");
@@ -239,11 +240,11 @@ class MapsLibV2 {
   }
 
   queryDidChange(query) {
-    return this.pagination.query.query !== query.query || this.pagination.query.field.sort().join('') !== query.field.sort().join('');
+    return this.pagination.queryObject.query !== query.query || this.pagination.queryObject.field.sort().join('') !== query.field.sort().join('');
   }
 
   shouldDoNewSearch(query) {
-    if (!this.pagination.query) {
+    if (!this.pagination.queryObject) {
       return true;
     }
     if (!query) {
@@ -290,9 +291,9 @@ class MapsLibV2 {
     }
   }
 
-  resetPagination() {
+  resetPaginationForSearch() {
     this.pagination.index = 0;
-    this.pagination.query = null;
+    this.pagination.queryObject = null;
     this.pagination.more = true;
     $("#pagination-back").addClass("disabled");
   }
@@ -315,7 +316,7 @@ class MapsLibV2 {
     if (locations.length <= 0) {
       return;
     }
-    let formatedLocations = this.htmlFormatFor(locations);
+    let formatedLocations = this.htmlFormatForAllLocations(locations);
     let locationsId = "#locations-listing-view";
     $(locationsId).html(formatedLocations);
 
@@ -337,17 +338,17 @@ class MapsLibV2 {
   }
 
   doSearchWithPagination() {
-    let query = this.pagination.query;
+    let queryObject = this.pagination.queryObject;
     this.pagination.canRepeat = false;
 
-    if (!query) {
+    if (!queryObject) {
       return;
     }
 
-    query.page = this.paginationOffset();
-    query.limit = DEFAULT_SEARCH_LIMIT;
+    queryObject.page = this.paginationOffset();
+    queryObject.limit = DEFAULT_SEARCH_LIMIT;
 
-    let result = this.search.queriableIndex.search(query.query, query);
+    let result = this.search.queriableIndex.search(queryObject.query, queryObject);
     let locations = result.result;
     let totalResults = locations.length;
     if (!result.next) {
@@ -361,10 +362,10 @@ class MapsLibV2 {
     this.updateResultsWindow(totalResults);
   }
 
-  doSearch(query) {
-    if (this.shouldDoNewSearch(query)) {
-      this.resetPagination();
-      this.pagination.query = query;
+  doSearch(queryObject) {
+    if (this.shouldDoNewSearch(queryObject)) {
+      this.resetPaginationForSearch();
+      this.pagination.queryObject = queryObject;
       this.doSearchWithPagination();
     }
   }
@@ -430,7 +431,7 @@ class MapsLibV2 {
 
   paginateOnClick() {
     $("#pagination-back").click(() => {
-      if (this.pagination.index > 0 && this.pagination.query) {
+      if (this.pagination.index > 0 && this.pagination.queryObject) {
         this.pagination.index -= 1;
         this.pagination.more = true;
         this.doSearchWithPagination();
@@ -443,7 +444,7 @@ class MapsLibV2 {
       }
     });
     $("#pagination-forward").click(() => {
-      if (this.pagination.more && this.pagination.query) {
+      if (this.pagination.more && this.pagination.queryObject) {
         this.pagination.index += 1;
         this.doSearchWithPagination();
         if ($("#pagination-back").hasClass("disabled")) {
@@ -482,6 +483,40 @@ class MapsLibV2 {
     return result;
   }
 
+  htmlForIcon(iconType) {
+    return '<i class="material-icons location-icon">' + iconType + '</i>';
+  }
+
+  htmlForIconAndInfo(icon, info) {
+    if (info == null) {
+      return "";
+    }
+    return [
+      '<div class="col s12 m12 l12 xl12">',
+      '<p>' + this.htmlForIcon(icon),
+      '<span class="location-info">' + info + '</span></p>',
+      '</div>'
+    ].join("")
+  }
+
+  htmlForWebsite(l) {
+    let urlLink;
+    if (typeof(l.website) !== 'string' || l.website.length < 11) {
+      name = l.name.split(' ').join('+') + '+Chicago+IL';
+      urlLink = '<a href="' + GOOGLE_SEARCH_URL_PREFIX + name + '" target="_blank">Search Google For ' + l.name + '</a>';
+    } else {
+      urlLink = '<a href="' + l.website + '" target="_blank">' + l.website + '</a>';
+    }
+    return this.htmlForIconAndInfo('language', urlLink)
+  }
+
+  googleMapsLink(address) {
+    if (address == "") {
+      return null;
+    }
+    return '<a href=' + '"http://maps.google.com/?q=' + address + '" target="_blank">Google Maps Directions</a><br>';
+  }
+
   htmlFormatForResultsWindow(totalResults, more) {
     let moreMessage;
     if (more) {
@@ -505,33 +540,17 @@ class MapsLibV2 {
       '<h5>' + l.name + '</h5>',
       '<div class="card">',
       '<div class="row card-content">',
-      '<div class="col s12 m12 l12 xl12">',
-      '<p><i class="material-icons location-icon">place</i>',
-      '<span class="location-info">' + l.address + '</span></p>',
-      '</div>',
-      '<div class="col s12 m12 l12 xl12">',
-      '<p><i class="material-icons location-icon">phone</i>',
-      '<span class="location-info">' + l.phone + '</span></p>',
-      '</div>',
-      '<div class="col s12 m12 l12 xl12">',
-      '<p><i class="material-icons location-icon">language</i>',
-      '<span class="location-info">',
-      '<a href="' + l.website + '" target="blank">' + l.website + '</a>',
-      '</span></p>',
-      '</div>',
-      '<div class="col s12 m12 l12 xl12">',
-      '<p><i class="material-icons location-icon">my_location</i>',
-      '<span class="location-info">',
-      '<a href=' + "'http://maps.google.com/?q=" + l.address + "' target='_blank'>Google Maps Directions</a><br>",
-      '</span></p>',
-      '</div>',
+      this.htmlForIconAndInfo('place', l.address),
+      this.htmlForIconAndInfo('phone', l.phone),
+      this.htmlForWebsite(l),
+      this.htmlForIconAndInfo('my_location', this.googleMapsLink(l.address)),
       '</div>',
       '<div class="card-tabs">',
       '<ul class="tabs tabs-fixed-width">',
       '<li class="tab"><a href="#services-' + hash + '" class="active">',
-      '<i class="material-icons location-icon">info_outline</i>Services</a></li>',
+      this.htmlForIcon('info_outline') + 'Services</a></li>',
       '<li class="tab"><a href="#description-' + hash + '">',
-      '<i class="material-icons location-icon">help</i>Description</a></li>',
+      this.htmlForIcon('help') + 'Description</a></li>',
       '</ul>',
       '</div>',
       '<div class="card-content grey lighten-4">',
@@ -549,7 +568,7 @@ class MapsLibV2 {
     $('#results-window').html(formatted);
   }
 
-  htmlFormatFor(locations) {
+  htmlFormatForAllLocations(locations) {
     let formatedLocations = locations.map((l) => {
       return [
         '<div class="one-location-listing col s12 m6 l6 xl6">',
