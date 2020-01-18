@@ -1,10 +1,4 @@
 initApp = function($, google, FlexSearch, materialDesign, materialize) {
-  // enable autocomplete
-  $('.autocomplete').autocomplete({
-    data: AUTOCOMPLETE_DATA,
-    minLength: 0
-  });
-  
   // instantiate app
   var mapInterface = new MapsLibV2({
     google: google,
@@ -18,5 +12,13 @@ initApp = function($, google, FlexSearch, materialDesign, materialize) {
   // load data to browser and setup the search engine
   MapsLibV2.getData().then(function(d) {
     mapInterface.initSearch(d);
+  });
+
+  // enable autocomplete
+  $('.autocomplete').autocomplete({
+    data: AUTOCOMPLETE_DATA,
+    minLength: 0,
+    onAutoComplete: null,
+    limit: Infinity
   });
 }

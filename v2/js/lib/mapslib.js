@@ -37,7 +37,7 @@ class MapsLibV2 {
       url: DATA_URL,
       async: true
     });
-  };
+  }
 
   /**
    * 
@@ -120,7 +120,7 @@ class MapsLibV2 {
     searchBox.addListener('places_changed', () => {
       let places = searchBox.getPlaces();
 
-      if (places.length == 0) {
+      if (places.length === 0) {
         return;
       }
 
@@ -178,9 +178,9 @@ class MapsLibV2 {
     $("#locations-listing-view").html("");
 
     // clear input boxes
-    $('#autocomplete-input').val("")
-    $('.mdc-select__selected-text').html("")
-    $("#organization-name-search").val("")
+    $('#autocomplete-input').val("");
+    $('.mdc-select__selected-text').html("");
+    $("#organization-name-search").val("");
 
     // clear location bounds input
     $('#pac-input').val("");
@@ -260,7 +260,7 @@ class MapsLibV2 {
 
     let searchTerms = "";
     let fields = []
-    if (nameSearchTerm != "") {
+    if (nameSearchTerm !== "") {
       searchTerms += nameSearchTerm;
       fields.push("name")
       fields.push("description")
@@ -271,13 +271,13 @@ class MapsLibV2 {
       if (this.search.activityFilter != null) {
         serviceSearchTerm += " " + this.search.activityFilter;
       }
-      if (serviceSearchTerm != "") {
+      if (serviceSearchTerm !== "") {
         searchTerms += " " + serviceSearchTerm.trim();
         fields.push("services")
       }
     }
 
-    if (searchTerms.trim() != "") {
+    if (searchTerms.trim() !== "") {
       return {
         query: searchTerms.trim(),
         bool: "or",
@@ -299,7 +299,7 @@ class MapsLibV2 {
   }
 
   paginationOffset() {
-    if (this.pagination.index == 0) {
+    if (this.pagination.index === 0) {
       return true;
     }
     let offset = this.pagination.index * DEFAULT_SEARCH_LIMIT;
@@ -332,7 +332,7 @@ class MapsLibV2 {
         clearInterval(verifyLocationsHaveLoaded);
       }
       count += 1;
-      if ($(locationsId).children().length == locations.length) {
+      if ($(locationsId).children().length === locations.length) {
         $(".tabs").tabs()
         clearInterval(verifyLocationsHaveLoaded);
       }
@@ -364,7 +364,8 @@ class MapsLibV2 {
     this.updateResultsWindow(totalResults);
   }
 
-  doSearch(queryObject) {
+  executeSearch() {
+    let queryObject = this.buildSearchQuery();
     if (this.shouldDoNewSearch(queryObject)) {
       this.resetPaginationForSearch();
       this.pagination.queryObject = queryObject;
@@ -384,9 +385,9 @@ class MapsLibV2 {
 
     //on keypress for enter do search
     field.keypress((e) => {
-      if (e.which == 13) {
+      if (e.which === 13) {
         clearTimeout(typingTimer);
-        this.doSearch(this.buildSearchQuery());
+        this.executeSearch();
       }
     });
 
@@ -394,7 +395,7 @@ class MapsLibV2 {
     field.keyup(() => {
       clearTimeout(typingTimer);
       typingTimer = setTimeout(() => {
-        this.doSearch(this.buildSearchQuery());
+        this.executeSearch();
       }, doneTypingInterval);
     });
 
@@ -406,7 +407,7 @@ class MapsLibV2 {
 
   searchOnClick(field) {
     field.click(() => {
-      this.doSearch(this.buildSearchQuery());
+      this.executeSearch();
     });
   }
 
@@ -414,20 +415,20 @@ class MapsLibV2 {
     let selectPopulation = new this.design.select.MDCSelect(document.querySelector("#population-filter"));
     let selectRecreation = new this.design.select.MDCSelect(document.querySelector("#activity-filter"));
     selectPopulation.listen('MDCSelect:change', () => {
-      if (selectPopulation.value != "") {
+      if (typeof(selectPopulation.value) === 'string' && selectPopulation.value.length > 0) {
         this.search.populationFilter = selectPopulation.value;
       } else {
         this.search.populationFilter = null;
       }
-      this.doSearch(this.buildSearchQuery());
+      this.executeSearch();
     });
     selectRecreation.listen('MDCSelect:change', () => {
-      if (selectRecreation.value != "") {
-        this.search.populationFilter = selectRecreation.value;
+      if (typeof(selectRecreation.value) === 'string' && selectRecreation.value.length > 0) {
+        this.search.activityFilter = selectRecreation.value;
       } else {
-        this.search.populationFilter = null;
+        this.search.activityFilter = null;
       }
-      this.doSearch(this.buildSearchQuery());
+      this.executeSearch();
     });
   }
 
@@ -437,7 +438,7 @@ class MapsLibV2 {
         this.pagination.index -= 1;
         this.pagination.more = true;
         this.doSearchWithPagination();
-        if (this.pagination.index == 0) {
+        if (this.pagination.index === 0) {
           $("#pagination-back").addClass("disabled");
         }
         if ($("#pagination-forward").hasClass("disabled")) {
@@ -456,7 +457,35 @@ class MapsLibV2 {
     });
   }
 
+  setupOrganizationNameFeedback() {
+    let nameSearch = $("#organization-name-search")
+    let filterSelectFields = $('.mdc-select')
+
+    //on keyup, check if input has value
+    nameSearch.keyup(() => {
+      if (nameSearch.val().trim().length >= 1) {
+        if (!filterSelectFields.hasClass('mdc-select--disabled')) {
+          filterSelectFields.addClass('mdc-select--disabled');
+          $('#autocomplete-input').prop('disabled', true);
+          $('#autocomplete-input').prop('placeholder', SERVICES_SEARCH_DISABLED);
+          $('.mdc-floating-label').html(SERVICES_SEARCH_DISABLED);
+          $('#autocomplete-input').val("");
+          $('.mdc-select__selected-text').html("");
+        }
+      } else {
+        if (filterSelectFields.hasClass('mdc-select--disabled')) {
+          filterSelectFields.removeClass('mdc-select--disabled');
+          $('#autocomplete-input').prop('disabled', false);
+          $('#autocomplete-input').prop('placeholder', AUTOCOMPLETE_PLACEHOLDER);
+          $('#population-filter .mdc-floating-label').html(POPULATION_PLACEHOLDER);
+          $('#activity-filter .mdc-floating-label').html(ACTIVITY_PLACEHOLDER);
+        }
+      }
+    });
+  }
+
   setupSearch() {
+    this.setupOrganizationNameFeedback();
     this.searchAsYouType($("#organization-name-search"));
     this.searchAsYouType($("#autocomplete-input"));
 
@@ -513,7 +542,7 @@ class MapsLibV2 {
   }
 
   googleMapsLink(address) {
-    if (address == "") {
+    if (address === "") {
       return null;
     }
     return '<a href=' + '"http://maps.google.com/?q=' + address + '" target="_blank">Google Maps Directions</a><br>';
@@ -558,7 +587,7 @@ class MapsLibV2 {
       '<div class="card-content grey lighten-4">',
       '<div id="services-' + hash + '">' + l.services + '</div>',
       '<div id="description-' + hash + '">',
-      l.description == "" ? "None Provided" : l.description,
+      l.description === "" ? "None Provided" : l.description,
       '</div>',
       '</div>',
       '</div>',

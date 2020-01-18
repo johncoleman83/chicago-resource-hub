@@ -1,12 +1,15 @@
+// maps constants
 const SEARCH_AS_YOU_TYPE_TIMEOUT = 4000;
 const DEFAULT_SEARCH_LIMIT = 100;
 const DEFAULT_ZOOM = 11;
 const CHICAGO = { lat: 41.85187182891432, lng: -87.69695319550783 };
 
+// data urls
 const LOCAL_DATA = "http://localhost:8000/data/locations.txt";
 const PROD_DATA = "https://www.chicagoresourcehub.com/wp-content/themes/fortunato-child/data/locations.txt";
 const DATA_URL = LOCAL_DATA;
 
+// maps support
 const GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com/search?q=";
 const MAP_MARKERS = {
   "standard": "https://www.chicagoresourcehub.com/wp-content/uploads/2020/01/drop-pin.png",
@@ -17,6 +20,13 @@ const MAP_MARKERS = {
   "food_provider": "https://www.chicagoresourcehub.com/wp-content/uploads/2019/11/groceries-32x32.png"
 };
 
+// placeholders
+const ACTIVITY_PLACEHOLDER = "Filter for an activity.";
+const POPULATION_PLACEHOLDER = "Filter for a population.";
+const AUTOCOMPLETE_PLACEHOLDER = "Enter keyword to search organizations.";
+const SERVICES_SEARCH_DISABLED = "Remove organization name to search services.";
+
+// autocomplete
 const AUTOCOMPLETE_DATA = {
   "Various": null,
   "Advocacy": null,
