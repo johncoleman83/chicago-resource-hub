@@ -86,7 +86,7 @@ paths: {
 
 * Start server and begin!
 ```
-$ cd v2 && ../server-cors.py
+$ cd v2 && ../scripts/server-cors.py
 ```
 
 * encode locations js file
@@ -98,7 +98,7 @@ to start spamming these locations.
 
 ```
 // start server
-$ cd v2 && ../server-cors.py
+$ cd v2 && ../scripts/server-cors.py
 
 // convert json data to javascript object
 let r = $.getJSON("http://localhost:8000/data/locations.json", function(json) {
